@@ -1,0 +1,46 @@
+.todo-list-container {
+  max-width: 400px;
+  margin: auto;
+}
+
+.todo-list-title {
+  text-align: center;
+  color: #333;
+}
+
+.todo-form {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 8px;
+}
+
+.add-button {
+  margin-left: 8px;
+  padding: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+}
+
+.todo-item {
+  margin-bottom: 8px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f7f7f9;
+}
+
+.remove-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+}

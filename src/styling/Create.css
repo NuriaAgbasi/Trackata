@@ -1,0 +1,113 @@
+.both {
+  justify-content: space-evenly;
+}
+.All {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: flex-start;
+  justify-content: center;
+  left: 40px;
+}
+.All .stocks-create {
+  align-items: flex-start;
+  display: inline-flex;
+  flex: 00 auto;
+  flex-direction: column;
+  position: relative;
+}
+.All .stocks-create #Stocks {
+  font-size: xx-large;
+  padding: 9px;
+}
+.All .stocks-create #create-name {
+  background-color: rgba(5, 62, 232, 0.302);
+  border-radius: 7px;
+  display: flex;
+  color: black;
+  font-family: "Karla", sans-serif;
+  font-weight: 900;
+  line-height: 48px;
+  margin-top: -1px;
+  white-space: nowrap;
+  width: fit-content;
+}
+.allinputs input {
+  left: 0;
+  position: absolute;
+  top: 64px;
+  width: 323px;
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  background-color: #5063bf;
+  border-radius: 15px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 14.75px 49px;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.allinputs input::placeholder {
+  color: #ffff;
+}
+#error {
+  color: red;
+  font-size: 14px;
+  display: block;
+  margin-top: 5px;
+  padding-top: 65px;
+}
+.terms-of-service-container {
+  padding-top: 50px;
+  font-size: x-small;
+}
+
+.error-active .terms-of-service-container {
+  padding-top: 2px;
+}
+.login-p {
+  align-self: stretch;
+  gap: 32px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 1000;
+}
+#login-a {
+  border-radius: 7px;
+  padding: 0px 150px;
+  cursor: pointer;
+}
+.Continue {
+  color: #ffff;
+  background-color: #5063bf;
+  border: 1px solid;
+  border-color: black;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  height: 66px;
+  justify-content: center;
+  min-width: 40px;
+  padding: 13px 62.2px;
+  left: 30px;
+  width: 60%;
+  position: relative;
+  cursor: pointer;
+}
+.Continue:hover {
+  background-color: lightblue;
+}
+.image-container {
+  position: absolute;
+  inset: 0px;
+  left: 35%;
+  justify-content: space-evenly;
+}
+#image {
+  width: 95%;
+  height: 105%;
+}

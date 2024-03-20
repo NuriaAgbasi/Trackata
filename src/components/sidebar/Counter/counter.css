@@ -1,0 +1,31 @@
+.pcm {
+  display: flex;
+  text-align: center;
+}
+
+.plus {
+  background-color: green;
+  height: 30px;
+}
+
+.count {
+  font-size: large;
+}
+.minus {
+  background-color: red;
+  height: 30px;
+}
+
+.input-number {
+  background-color: #5063bf;
+  color: white;
+}
+.Capital-price-input,
+.Sell-price-input {
+  width: 25px;
+  margin-left: 10px;
+}
+.Capital-price-label,
+.Sell-price-label {
+  font-size: x-small;
+}

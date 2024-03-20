@@ -1,0 +1,23 @@
+.verify-container {
+  position: relative;
+  text-align: center;
+}
+
+.verify-container h2,
+.verify-container p,
+.verify-container button {
+  position: relative;
+  transform: translateY(-3%);
+  padding: 20px;
+  top: 300px;
+}
+.verify-container button {
+  color: #ffff;
+  background-color: #5063bf;
+  border: 1px solid;
+  border-color: black;
+  border-radius: 9999px;
+  height: 66px;
+  padding: 13px 62.2px;
+  cursor: pointer;
+}

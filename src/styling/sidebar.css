@@ -1,0 +1,57 @@
+.sidenav {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+#heading {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 600;
+  background: linear-gradient(40deg, #5063bf, #0e0e0e, #0e0e0e, #5063bf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  margin-top: 30px;
+}
+
+#Username {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#Username #image {
+  width: 70px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  margin-right: 10px;
+}
+
+#selectedContent {
+  position: absolute;
+  inset: 0px;
+  left: 35%;
+  justify-content: space-evenly;
+  height: 111%;
+}
+
+#Logout {
+  color: #ffff;
+  background-color: #5063bf;
+  border: 1px solid;
+  border-color: black;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  height: 66px;
+  justify-content: center;
+  min-width: 40px;
+  padding: 13px 62.2px;
+  left: 70px;
+  top: 60px;
+  width: 25%;
+  position: relative;
+  cursor: pointer;
+}
