@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="flex h-screen">
+      <div class="w-1/2 bg-black p-10">
+        <h2 class="text-3xl font-semibold mb-4">Login</h2>
+        <form>
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-normal mb-2"
+              for="email"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              class="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your email"
+            />
+          </div>
+          <div class="mb-6">
+            <label
+              class="block text-gray-700 text-sm font-normal mb-2"
+              for="password"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              class="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your password"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg"
+          >
+            Sign In
+          </button>
+        </form>
+      </div>
+      <div
+        class="w-1/2 bg-cover bg-center"
+        style="
+          background-image: url('../../image/4c6cf289-374c-44ad-9776-80d0d589604b.jpeg');
+        "
+      ></div>
+    </div>
+  </body>
+</html>
