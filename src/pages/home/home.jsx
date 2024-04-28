@@ -6,6 +6,13 @@ import AddStock from "../addStock/addStock";
 import Footer from "./footer";
 import Typewriter from "./typeWriter";
 
+// ToDo: Create a SideBAR navigation that comtains the following: Inventory, Sales, Orders, Dashboard, Team, Profile
+// Make it a signle page application
+// Make the page responsive (depending on the screen size, the page should adjust accordingly)
+// Make this a protected route, so you can't access the page unless you are logged in
+// Chage from Home to homePage
+// remove addStock and move it to inventory page
+
 const Home = () => {
   const [clicked, SetClicked] = useState(false);
   const handleOnclick = () => {
