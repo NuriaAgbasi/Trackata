@@ -2,16 +2,24 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useState } from "react";
 import Home from "../pages/home/home";
 import AddStock from "../pages/addStock/addStock";
-import Contact from "../pages/Contact";
-
+import logo from "../image/logo.png";
+import SalesLog from "./salesLog.jsx";
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   return (
     <Router>
       <nav className="bg-[#5063bf] p-4 pr-0">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center">
-            <span className="text-white font-bold text-lg">Stocks</span>
+          <div>
+            <a className="mx-2 my-1 flex items-center lg:mb-0 lg:mt-0" href="#">
+              <img
+                className="me-2 h-20"
+                src={logo}
+                alt="TE Logo"
+                loading="lazy"
+              />
+              <span className="text-black dark:text-white">Stocks</span>
+            </a>
           </div>
           <div className=" flex">
             <div className="text-sm lg:flex-grow">
@@ -25,13 +33,13 @@ const Navbar = () => {
                 to="/AddStock"
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-500 mr-4"
               >
-                Add Stock
+                STOCK
               </Link>
               <Link
-                to="/Contact"
+                to="/Saleslog"
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-500 mr-4"
               >
-                Contact
+                Sales Log
               </Link>
             </div>
             <div className="">
@@ -89,7 +97,7 @@ const Navbar = () => {
       <Routes className="ml-0 lg:ml-6">
         <Route exact path="/" element={<Home />} />
         <Route path="/AddStock" element={<AddStock />} />
-        <Route path="/Contact" element={<Contact />} />
+        <Route path="/Saleslog" element={<SalesLog />} />
       </Routes>
     </Router>
   );

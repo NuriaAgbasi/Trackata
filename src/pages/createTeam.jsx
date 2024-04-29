@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PleaseVerifyEmail from "../pages/pleaseVerifyEmail";
 import ReusableCreate from "../components/Create/reusablecreate";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import SideBar from "./sideBarFolder/sideBar/sideBar";
 
 const CreateTeam = () => {
@@ -19,16 +19,16 @@ const CreateTeam = () => {
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  useEffect(() => {
-    const checkCookie = () => {
-      if (Cookies.get()) {
-        setVisited(true);
-      }
-    };
-    checkCookie();
-  }, []);
+  // useEffect(() => {
+  //   const checkCookie = () => {
+  //     if (Cookies.get()) {
+  //       setVisited(true);
+  //     }
+  //   };
+  //   checkCookie();
+  // }, []);
   const handleRegistration = () => {
-    Cookies.set(formData.username, formData.password);
+    // Cookies.set(formData.username, formData.password);
     if (
       !formData.username ||
       !formData.email ||
