@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 
+
+// You should have a login page that takes in a username, and password
+// When the user clicks continue, you should store the username and password in the state
+// you should have a signup page that takes in a username, email, and password
+// users should be able to navigate between the login and signup page
 const Login = ({ onContinue }) => {
   const [formData, setFormData] = useState({
     username: "",

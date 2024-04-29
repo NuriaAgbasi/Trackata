@@ -5,6 +5,7 @@ import ReusableCreate from "../components/Create/reusablecreate";
 import SideBar from "./sideBarFolder/sideBar/sideBar";
 
 const CreateTeam = () => {
+  console.log("CreateTeam");
   const [formData, setFormData] = useState({
     teamName: "",
     email: "",
@@ -19,6 +20,8 @@ const CreateTeam = () => {
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  // Todo:
+  // Fix this use Effect
   // useEffect(() => {
   //   const checkCookie = () => {
   //     if (Cookies.get()) {
