@@ -3,8 +3,8 @@ import "./home.css";
 import Image from "../../image/image1.jpeg";
 import { useState } from "react";
 import AddStock from "../addStock/addStock";
-import Footer from "./footer";
 import Typewriter from "./typeWriter";
+import Background from "../../components/background";
 
 // ToDo: Create a SideBAR navigation that comtains the following: Inventory, Sales, Orders, Dashboard, Team, Profile
 // Make it a signle page application
@@ -23,19 +23,7 @@ const Home = () => {
       {clicked ? (
         <AddStock />
       ) : (
-        <div id="bgcol" className="area">
-          <ul class="circles">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
+        <Background>
           <div className="flex items-center justify-between min-h-screen">
             <div className="w-1/2 ml-16">
               <div id="font" className="text-xl font-bold mb-2">
@@ -65,8 +53,7 @@ const Home = () => {
               <img src={Image} alt="people" className="w-3/4 rounded-full" />
             </div>
           </div>
-          <Footer />
-        </div>
+        </Background>
       )}
     </ReusableLink>
   );
