@@ -1,5 +1,6 @@
+import Background from "../components/background";
 const Profile = () => {
-  return <h1>Profile</h1>;
+  return <Background>Profile</Background>;
 };
 
 export default Profile;

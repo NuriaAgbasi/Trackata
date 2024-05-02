@@ -24,8 +24,8 @@ const Home = () => {
         <AddStock />
       ) : (
         <Background>
-          <div className="flex items-center justify-between min-h-screen">
-            <div className="w-1/2 ml-16">
+          <div className="flex justify-center items-center">
+            <div className="w-1/2 mt-72 ml-16">
               <div id="font" className="text-xl font-bold mb-2">
                 <h1 className=" pr-9">
                   <Typewriter />
@@ -37,19 +37,19 @@ const Home = () => {
                   Input your stocks
                 </p>
               </div>
-              <div class="relative inline-flex ml-40 group">
-                <div class="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt"></div>
+              <div className="relative inline-flex ml-40 group">
+                <div className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt"></div>
                 <a
                   onClick={handleOnclick}
                   title="Input"
-                  class="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gray-900 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                  className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gray-900 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                   role="button"
                 >
                   Input now
                 </a>
               </div>
             </div>
-            <div className="w-1/3 mt-14 mr-20 flex items-center justify-center">
+            <div className="w-1/3 mt-56 mr-20 flex items-center justify-center">
               <img src={Image} alt="people" className="w-3/4 rounded-full" />
             </div>
           </div>

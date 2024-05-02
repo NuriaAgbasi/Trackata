@@ -29,9 +29,9 @@ const SalesPopup = ({
         <div className="grid h-screen place-items-center">
           <Card className="max-w-xl w-full">
             <CardBody>
-              <span className="close" onClick={closeSalesPopup}>
+              <Button className="close" onClick={closeSalesPopup}>
                 &times;
-              </span>
+              </Button>
               <Typography
                 color="blue-gray"
                 className="mb-6 mt-10 ml-56"
