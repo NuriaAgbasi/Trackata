@@ -4,16 +4,21 @@ import { FaBars } from "react-icons/fa";
 import sideBarData from "./sideBarData";
 import "./sideBar.css";
 import Footer from "../../home/footer";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = () => {
+    setIsOpen(!isOpen);
+    const arrowIcon = document.querySelector(".arrow-icon");
+    arrowIcon.classList.toggle("rotate-180");
+  };
   return (
     <>
       <div className="flex">
         <div
           style={{ width: isOpen ? "200px" : "50px" }}
-          className="bg-black text-white h-screen w-48 transition-all duration-100"
+          className=" bg-indigo-600 text-white h-screen w-48 transition-all duration-100"
         >
           <div className="flex items-center py-5 px-4">
             <h1
@@ -24,9 +29,9 @@ const Sidebar = ({ children }) => {
             </h1>
             <div
               style={{ marginLeft: isOpen ? "50px" : "0px" }}
-              className="flex text-2xl ml-12"
+              className="flex text-2xl ml-12 transition-transform transform rotate-0 arrow-icon "
             >
-              <FaBars onClick={toggle} />
+              <IoIosArrowDropleftCircle onClick={toggle} />
             </div>
           </div>
           {sideBarData.map((item, index) => (
@@ -46,7 +51,7 @@ const Sidebar = ({ children }) => {
             </NavLink>
           ))}
         </div>
-        <main className="flex-1">{children}</main>
+        <main className="relative">{children}</main>
       </div>
       <Footer />
     </>

@@ -1,5 +1,7 @@
+import Background from "../../components/background";
+
 const Sales = () => {
-  return <h1>Sales</h1>;
+  return <Background>Sales</Background>;
 };
 
 export default Sales;

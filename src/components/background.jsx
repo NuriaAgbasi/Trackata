@@ -3,7 +3,7 @@ import React from "react";
 function Background({ children }) {
   return (
     <div>
-      <div id="bgcol" className="area">
+      <div className="area">
         <ul class="circles">
           <li></li>
           <li></li>
@@ -17,7 +17,7 @@ function Background({ children }) {
           <li></li>
         </ul>
       </div>
-      {children}
+      <div>{children}</div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import { BiSolidPurchaseTag } from "react-icons/bi";
 import { MdOutlineInventory2 } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
+import { FaUserFriends } from "react-icons/fa";
 
 
 
@@ -32,6 +33,11 @@ const sideBarData = [
         title: 'Profile',
         path: '/profile',
         icon: <FaRegUser />
+    }
+    , {
+        title: 'Teams',
+        path: '/teams',
+        icon: <FaUserFriends />
     }
 ]
 export default sideBarData;
