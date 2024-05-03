@@ -82,9 +82,7 @@ const TodoList = ({ todos, removeTodo, NumberofStock, Price, salesLog }) => {
                       <button
                         onClick={() => openSoldPopup(todo)}
                         className="bg-green-400 ml-3 text-white border-none p-2 cursor-pointer"
-                      >
-                        Sales
-                      </button>
+                      ></button>
                     </span>
                   </li>
                 );

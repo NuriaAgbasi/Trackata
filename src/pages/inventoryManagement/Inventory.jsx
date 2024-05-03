@@ -1,41 +1,78 @@
-// Inventory page
-// Table for inventory management Header (Item Id, Item dec, Quantity, Price (Total of items), Data of purchase, Data updated, Last restocked date, Last sold)
+import React, { useState } from "react";
+import InventoryForm from "./inventoryForm";
+import InventoryTable from "./inventoryTable.jsx";
+import useLocalStorage from "../../components/localStorage.ts";
+import { Button, Typography } from "@material-tailwind/react";
+import { CiSquarePlus } from "react-icons/ci";
 
-import Background from "../../components/background";
-import AddStockPopup from "../addStock/addStockPopup";
-import { useState } from "react";
-import { Button } from "@material-tailwind/react";
-import { Table } from "./table";
-import useTodoState from "../../components/useTodoState";
-// Button for adding new item, Button for deleting item, Button for updating item
-const Inventory = () => {
+function Inventory() {
+  const [items, setItems] = useLocalStorage("inventoryItems", []);
   const [addStockpop, setAddStockPopup] = useState(false);
-  const { todos, NumberofStock, price, removeTodo } = useTodoState();
+
   const handleClosePopup = () => {
     setAddStockPopup(false);
   };
-  return (
-    <Background>
-      <div className="flex justify-between items-center gap-4 pt-5">
-        <h1 className=" font-extrabold text-4xl ">Inventory</h1>
-        <Button onClick={() => setAddStockPopup(true)}>Add Stock</Button>
-      </div>
-      <Table
-        todos={todos}
-        removeTodo={removeTodo}
-        NumberofStock={NumberofStock}
-        Price={price}
-      />
 
+  const handleAddItem = (newItem) => {
+    setItems([...items, newItem]);
+  };
+
+  const handleRemoveStock = (index) => {
+    const updatedItems = [...items];
+    updatedItems.splice(index, 1);
+    setItems(updatedItems);
+  };
+
+  const handleEditStock = (index, newStock, newPrice) => {
+    console.log("Editing item at index:", index);
+    console.log("New stock:", newStock);
+    console.log("New price:", newPrice);
+
+    const updatedItems = [...items];
+    updatedItems[index].stock = newStock;
+    updatedItems[index].price = newPrice;
+    console.log("Updated items:", updatedItems);
+
+    setItems(updatedItems);
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between">
+        <Typography color="blue-gray" className="" variant="h4">
+          Inventory Page
+        </Typography>
+        <Button onClick={() => setAddStockPopup(true)}>
+          <div className="flex">
+            <CiSquarePlus />
+            Add New Item
+          </div>
+        </Button>
+      </div>
+      <br />
       {addStockpop && (
-        <AddStockPopup
-          trigger={addStockpop}
-          setTrigger={setAddStockPopup}
-          handleClose={handleClosePopup}
-        />
+        <div
+          style={{
+            position: "absolute",
+            zIndex: 9999,
+          }}
+        >
+          <div>
+            <InventoryForm
+              onAddItem={handleAddItem}
+              handleClosePopup={handleClosePopup}
+            />
+          </div>
+        </div>
       )}
-    </Background>
+      <InventoryTable
+        items={items}
+        setItems={setItems}
+        onRemoveStock={handleRemoveStock}
+        onEditStock={handleEditStock}
+      />
+    </div>
   );
-};
+}
 
 export default Inventory;
