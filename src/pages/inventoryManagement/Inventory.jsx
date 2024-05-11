@@ -1,41 +1,67 @@
-// Inventory page
-// Table for inventory management Header (Item Id, Item dec, Quantity, Price (Total of items), Data of purchase, Data updated, Last restocked date, Last sold)
+import React, { useState } from "react";
+import InventoryForm from "./inventoryForm";
+import InventoryTable from "./inventoryTable.jsx";
+import useLocalStorage from "../../components/localStorage.ts";
+import { CiSquarePlus } from "react-icons/ci";
+import Background from "../../components/background.jsx";
+import Inventorystate from "./inventorystate.jsx";
 
-import Background from "../../components/background";
-import AddStockPopup from "../addStock/addStockPopup";
-import { useState } from "react";
-import { Button } from "@material-tailwind/react";
-import { Table } from "./table";
-import useTodoState from "../../components/useTodoState";
-// Button for adding new item, Button for deleting item, Button for updating item
-const Inventory = () => {
-  const [addStockpop, setAddStockPopup] = useState(false);
-  const { todos, NumberofStock, price, removeTodo } = useTodoState();
-  const handleClosePopup = () => {
-    setAddStockPopup(false);
-  };
+function Inventory() {
+  const {
+    setAddStockPopup,
+    addStockpop,
+    handleAddItem,
+    handleClosePopup,
+    items,
+    setItems,
+    handleRemoveStock,
+    handleEditStock,
+  } = Inventorystate();
   return (
-    <Background>
-      <div className="flex justify-between items-center gap-4 pt-5">
-        <h1 className=" font-extrabold text-4xl ">Inventory</h1>
-        <Button onClick={() => setAddStockPopup(true)}>Add Stock</Button>
-      </div>
-      <Table
-        todos={todos}
-        removeTodo={removeTodo}
-        NumberofStock={NumberofStock}
-        Price={price}
-      />
-
-      {addStockpop && (
-        <AddStockPopup
-          trigger={addStockpop}
-          setTrigger={setAddStockPopup}
-          handleClose={handleClosePopup}
+    <div>
+      <Background>
+        <div className="flex justify-between">
+          <h4 class="text-blue-gray-50 mb-2 mt-0 text-2xl font-medium leading-tight ">
+            Inventory Page
+          </h4>
+          <button
+            type="button"
+            data-twe-ripple-init
+            data-twe-ripple-color="light"
+            onClick={() => setAddStockPopup(true)}
+            class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+          >
+            <div className="flex">
+              <CiSquarePlus />
+              Add New Item
+            </div>
+          </button>
+        </div>
+        <br />
+        {addStockpop && (
+          <div
+            style={{
+              position: "absolute",
+              zIndex: 9999,
+            }}
+          >
+            <div>
+              <InventoryForm
+                onAddItem={handleAddItem}
+                handleClosePopup={handleClosePopup}
+              />
+            </div>
+          </div>
+        )}
+        <InventoryTable
+          items={items}
+          setItems={setItems}
+          onRemoveStock={handleRemoveStock}
+          onEditStock={handleEditStock}
         />
-      )}
-    </Background>
+      </Background>
+    </div>
   );
-};
+}
 
 export default Inventory;

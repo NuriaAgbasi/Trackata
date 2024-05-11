@@ -36,7 +36,7 @@ const sideBarData = [
     }
     , {
         title: 'Teams',
-        path: '/teams',
+        path: 's',
         icon: <FaUserFriends />
     }
 ]

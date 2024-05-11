@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardBody,
@@ -7,24 +7,29 @@ import {
   Button,
 } from "@material-tailwind/react";
 
-const EditPopup = ({
-  editedName,
-  editedStock,
-  editedPrice,
-  restockAmount,
-  closeEditPopup,
-  handleRestock,
-  setEditedStock,
-  setEditedPrice,
-  setRestockAmount,
-}) => {
+const EditPopup = ({ editedStock, editedPrice, onSave, onClose }) => {
+  const [newStock, setNewStock] = useState(editedStock);
+  const [newPrice, setNewPrice] = useState(editedPrice);
+
+  const handleStockChange = (e) => {
+    setNewStock(parseInt(e.target.value));
+  };
+
+  const handlePriceChange = (e) => {
+    setNewPrice(parseFloat(e.target.value));
+  };
+
+  const handleSave = () => {
+    onSave(newStock, newPrice);
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center ">
       <div className="w-full px-4">
         <div className="grid h-screen place-items-center">
           <Card className="max-w-xl w-full">
             <CardBody>
-              <Button className="close" onClick={closeEditPopup}>
+              <Button className=" bg-red-600 close" onClick={onClose}>
                 &times;
               </Button>
               <Typography
@@ -32,42 +37,41 @@ const EditPopup = ({
                 className="mb-6 mt-10 ml-56"
                 variant="h4"
               >
-                Restock
+                Edit
               </Typography>
-              <Input
-                type="text"
-                value={editedName}
-                label="Stock Name"
-                className=""
-                disabled
-              />
+
+              <div>
+                <Input
+                  id="stock"
+                  type="number"
+                  label="Name"
+                  value={newStock}
+                  disabled
+                  onChange={handleStockChange}
+                />
+              </div>
               <br />
-              <Input
-                type="text"
-                value={editedStock}
-                onChange={(e) => setEditedStock(e.target.value)}
-                label="Current Stock"
-                disabled
-              />
+              <div>
+                <Input
+                  label="Price"
+                  id="price"
+                  type="number"
+                  value={newPrice}
+                  onChange={handlePriceChange}
+                />
+              </div>
               <br />
-              <Input
-                type="text"
-                value={editedPrice}
-                onChange={(e) => setEditedPrice(e.target.value)}
-                label="Price"
-              />
-              <br />
-              <Input
-                type="number"
-                id="restockAmount"
-                label="Restock Amount"
-                className="border rounded p-2"
-                value={restockAmount}
-                onChange={(e) => setRestockAmount(e.target.value)}
-              />
-              <Button className="m-5 ml-60" onClick={() => handleRestock()}>
-                Update
-              </Button>
+              <div className="flex">
+                <Button
+                  onClick={handleSave}
+                  className="ml-40 bg-green-500 mr-2"
+                >
+                  Save
+                </Button>
+                <Button onClick={onClose} className=" bg-orange-400 ml-2">
+                  Cancel
+                </Button>
+              </div>
             </CardBody>
           </Card>
         </div>

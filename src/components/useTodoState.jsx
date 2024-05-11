@@ -12,8 +12,17 @@ const useTodoState = () => {
   const [newTodo, setNewTodo] = useState("");
   const [newNumberOfStock, setNewNumberOfStock] = useState("");
   const [newPrice, setNewPrice] = useState("");
+  const [error, setError] = useState("");
 
   const addTodo = () => {
+    if (!newTodo || !newNumberOfStock || !newPrice) {
+      setError("Please input all fields");
+      return;
+    }
+    if (isNaN(newNumberOfStock) || isNaN(newPrice)) {
+      setError("Please enter valid numbers for stock and price");
+      return;
+    }
     if (
       newTodo.trim() !== "" &&
       newNumberOfStock.trim() !== "" &&

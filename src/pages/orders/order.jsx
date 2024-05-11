@@ -1,120 +1,62 @@
 import React from "react";
-import TodoListState from "../../components/todoListState.jsx";
-import { Typography } from "@material-tailwind/react";
-import SalesPopup from "../../components/salesPopup.jsx";
-import EditPopup from "../../components/editPopup.jsx";
+import Salesstate from "../sales/salesstate";
 import Background from "../../components/background.jsx";
-const Orders = ({ todos, removeTodo, NumberofStock, Price, salesLog }) => {
+function Orders() {
+  const { salesLog } = Salesstate();
   return (
     <Background>
-      <TodoListState
-        todos={todos}
-        removeTodo={removeTodo}
-        NumberofStock={NumberofStock}
-        Price={Price}
-      >
-        {({
-          editPopup,
-          editedName,
-          editedPrice,
-          editedStock,
-          restockAmount,
-          salesPopup,
-          openEditPopup,
-          handleRestock,
-          openSoldPopup,
-          handleSales,
-          closeEditPopup,
-          closeSalesPopup,
-          setRestockAmount,
-          setEditedPrice,
-          setEditedStock,
-        }) => (
-          <div style={{ position: "relative" }}>
-            <ul style={{ listStyle: "none", padding: "0" }}>
-              {todos.map((todo) => {
-                return (
-                  <li
-                    key={todo.id}
-                    className="mb-2 m-4 p-2 border border-gray-300 rounded flex justify-between items-center bg-gray-100 w-screen"
-                  >
-                    <Typography
-                      color="blue-gray"
-                      className="mb-2 ml-5 mt-2"
-                      variant="h5"
+      <h4 class="mb-2 mt-0 text-2xl text-white font-medium leading-tight">
+        Orders Log
+      </h4>
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
+                <thead class="border-b text-white border-neutral-200 font-medium dark:border-white/10">
+                  <tr>
+                    <th scope="col" class="px-6 py-4">
+                      Order Id
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Time
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Date
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Customer
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Quantity
+                    </th>
+                    <th scope="col" class="px-6 py-4">
+                      Product
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {salesLog.map((sale, index) => (
+                    <tr
+                      key={index}
+                      className="border-b text-white border-neutral-200 dark:border-white/10"
                     >
-                      <p className="mb-3">Name</p>
-                      <span className=" text-center">{todo.text}</span>
-                    </Typography>
-                    <Typography
-                      color="blue-gray"
-                      className="mb-2 ml-5 mt-2"
-                      variant="h5"
-                    >
-                      <p className="mb-3">NŌ of Stock</p>
-                      <span className="text-center">
-                        {NumberofStock.find((stock) => stock.id === todo.id)
-                          ?.text || ""}
-                      </span>
-                    </Typography>
-                    <Typography
-                      color="blue-gray"
-                      className="mb-2 ml-5 mt-2"
-                      variant="h5"
-                    >
-                      <p className="mb-3">Price</p>
-                      {Price.find((stock) => stock.id === todo.id)?.text || ""}
-                    </Typography>
-                    <span>
-                      <button
-                        onClick={() => removeTodo(todo.id)}
-                        className="bg-red-500 text-white border-none p-2 cursor-pointer"
-                      >
-                        Stock finished
-                      </button>
-                      <button
-                        onClick={() => openEditPopup(todo)}
-                        className=" bg-orange-300 ml-3 text-white border-none p-2 cursor-pointer"
-                      >
-                        Restock
-                      </button>
-                      <button
-                        onClick={() => openSoldPopup(todo)}
-                        className="bg-green-400 ml-3 text-white border-none p-2 cursor-pointer"
-                      >
-                        Sales
-                      </button>
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-            {editPopup && (
-              <EditPopup
-                editedName={editedName}
-                editedStock={editedStock}
-                editedPrice={editedPrice}
-                restockAmount={restockAmount}
-                closeEditPopup={closeEditPopup}
-                handleRestock={handleRestock}
-                setEditedStock={setEditedStock}
-                setEditedPrice={setEditedPrice}
-                setRestockAmount={setRestockAmount}
-              />
-            )}
-            {salesPopup && (
-              <SalesPopup
-                itemName={editedName}
-                currentStock={editedStock}
-                handleSales={handleSales}
-                closeSalesPopup={closeSalesPopup}
-              />
-            )}
+                      <td className="px-6 py-4">{index}</td>
+                      <td className="px-6 py-4">{sale.time}</td>
+                      <td className="px-6 py-4">{sale.date}</td>
+                      <td className="px-6 py-4">{sale.customer}</td>
+                      <td className="px-6 py-4">{sale.quantity}</td>
+                      <td className="px-6 py-4">{sale.product}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        )}
-      </TodoListState>
+        </div>
+      </div>
     </Background>
   );
-};
+}
 
 export default Orders;

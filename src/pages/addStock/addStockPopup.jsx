@@ -13,6 +13,7 @@ const AddStockPopup = (props) => {
     newPrice,
     setNewPrice,
     addTodo,
+    error,
   } = useTodoState();
 
   const handleClose = () => {
@@ -69,7 +70,7 @@ const AddStockPopup = (props) => {
               onChange={(e) => setNewPrice(e.target.value)}
               className="flex-1 p-2 border border-gray-300"
             />
-            <Warning>Input Somethong or it won't work</Warning>
+            {error && <p className="text-red-500">{error}</p>}
             <button
               onClick={() => {
                 addTodo();

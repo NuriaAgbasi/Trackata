@@ -22,12 +22,7 @@ const App = () => {
         <SideBar>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/orders" element={<TodoList
-              todos={todos}
-              removeTodo={removeTodo}
-              NumberofStock={NumberofStock}
-              Price={price}
-            />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/profile" element={<Profile />} />
