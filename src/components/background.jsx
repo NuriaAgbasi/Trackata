@@ -4,7 +4,7 @@ function Background({ children }) {
   return (
     <div>
       <div className="area">
-        <ul class="circles">
+        <ul className="circles">
           <li></li>
           <li></li>
           <li></li>

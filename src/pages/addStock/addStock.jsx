@@ -15,7 +15,7 @@ const AddStock = () => {
   return (
     <ReusableLink>
       <div id="bgcol" className="area">
-        <ul class="circles">
+        <ul className="circles">
           <li></li>
           <li></li>
           <li></li>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
 import sideBarData from "./sideBarData";
 import "./sideBar.css";
 import Footer from "../../home/footer";
@@ -39,7 +38,7 @@ const Sidebar = ({ children }) => {
               to={item.path}
               key={index}
               className="link flex items-center text-white py-2 px-3 gap-4 transition-all duration-500 hover:bg-lightskyblue hover:text-black"
-              activeclassName="active"
+              activeclassname="active"
             >
               <div className="text-base">{item.icon}</div>
               <div

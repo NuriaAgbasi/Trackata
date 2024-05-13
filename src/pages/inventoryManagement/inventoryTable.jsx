@@ -88,7 +88,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
                 key={head}
                 className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
               >
-                <p class="text-blue-gray text-sm font-normal leading-none ">
+                <p className="text-blue-gray text-sm font-normal leading-none ">
                   {head}
                 </p>
               </th>
@@ -99,13 +99,19 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
           {items.map((item, index) => (
             <tr key={index} className=" bg-white">
               <td className="p-4">
-                <p class="text-blue-gray text-sm font-normal">{item.name}</p>
+                <p className="text-blue-gray text-sm font-normal">
+                  {item.name}
+                </p>
               </td>
               <td className="p-4">
-                <p class="text-blue-gray text-sm font-normal">{item.stock}</p>
+                <p className="text-blue-gray text-sm font-normal">
+                  {item.stock}
+                </p>
               </td>
               <td className="p-4">
-                <p class="text-blue-gray text-sm font-normal">{item.price}</p>
+                <p className="text-blue-gray text-sm font-normal">
+                  {item.price}
+                </p>
               </td>
               <td>
                 <button
@@ -116,9 +122,12 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
                 </button>
                 <button
                   onClick={() => handleEditStock(index)}
-                  className="bg-green-500 text-white px-4 py-2 rounded"
+                  className="bg-green-500 text-white px-4 py-2 rounded mr-2"
                 >
-                  Edit Stock
+                  Edit Stock Price
+                </button>
+                <button className="bg-green-500 text-white px-4 py-2 rounded">
+                  Restock
                 </button>
               </td>
             </tr>
