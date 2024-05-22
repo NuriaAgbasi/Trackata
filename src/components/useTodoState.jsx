@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useLocalStorage from "./localStorage.ts";
-import { Error } from "./Error.jsx";
 
 const useTodoState = () => {
   const [todos, setTodos] = useLocalStorage("todos", []);
