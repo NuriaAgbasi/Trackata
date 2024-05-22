@@ -8,7 +8,7 @@ function Cards({ title, cardContent, children }) {
           <div className="bg-gray-300 rounded-full p-6">{children}</div>
         </div>
         <p className="text-2xl mt-4">{cardContent}</p>
-        <h5 className="mb-3 text-gray-400">{title}</h5>
+        <h5 className="mb-3  text-gray-400">{title}</h5>
       </div>
     </div>
   );

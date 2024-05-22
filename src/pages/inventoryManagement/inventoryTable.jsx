@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
-import EditInventory from "./editInvtory";
-import DeleteInventory from "./deleteInventory";
+import EditInventory from "./editInvtory.js";
+import DeleteInventory from "./deleteInventory.js";
 import RestockPopup from "./restockInventory";
 import Alert from "../../components/alert";
 
-const TABLE_HEAD = ["Name", "Number of Stock", "Price", "Actions"];
+const TABLE_HEAD = [
+  "Name",
+  "Number of Stock",
+  "Price",
+  "Cost Price",
+  "Actions",
+];
 
 function InventoryTable({ items, setItems, onRemoveStock }) {
   useEffect(() => {}, [items]);
@@ -17,7 +23,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
   const [editedPrice, setEditedPrice] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [AlertType, setAlertType] = useState("");
+  const [alertType, setAlertType] = useState("");
 
   const handleRemoveStock = (index) => {
     setConfirmDelete(true);
@@ -100,7 +106,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
 
   return (
     <div className="h-full w-full overflow-scroll">
-      <Alert message={alertMessage} type={AlertType} />{" "}
+      <Alert message={alertMessage} type={alertType} />
       {showEditPopup && (
         <EditInventory
           editedStock={editedStock}
@@ -132,7 +138,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
                 key={head}
                 className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
               >
-                <p className="text-blue-gray text-sm font-normal leading-none ">
+                <p className="text-blue-gray text-sm font-normal leading-none">
                   {head}
                 </p>
               </th>
@@ -141,7 +147,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
         </thead>
         <tbody>
           {items.map((item, index) => (
-            <tr key={index} className=" bg-white">
+            <tr key={index} className="bg-white">
               <td className="p-4">
                 <p className="text-blue-gray text-sm font-normal">
                   {item.name}
@@ -155,6 +161,11 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
               <td className="p-4">
                 <p className="text-blue-gray text-sm font-normal">
                   {item.price}
+                </p>
+              </td>
+              <td className="p-4">
+                <p className="text-blue-gray text-sm font-normal">
+                  {item.costPrice}
                 </p>
               </td>
               <td>
