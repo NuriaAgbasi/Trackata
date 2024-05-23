@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import InventoryForm from "./inventoryForm";
 import InventoryTable from "./inventoryTable.jsx";
-import useLocalStorage from "../../components/localStorage.ts";
 import { CiSquarePlus } from "react-icons/ci";
 import Background from "../../components/background.jsx";
 import Inventorystate from "./inventorystate.jsx";
@@ -21,7 +20,7 @@ function Inventory() {
     <div>
       <Background>
         <div className="flex justify-between">
-          <h4 class="text-blue-gray-50 mb-2 mt-0 text-2xl font-medium leading-tight ">
+          <h4 className="text-blue-gray-50 mb-2 mt-0 text-2xl font-medium leading-tight ">
             Inventory Page
           </h4>
           <button
@@ -29,7 +28,7 @@ function Inventory() {
             data-twe-ripple-init
             data-twe-ripple-color="light"
             onClick={() => setAddStockPopup(true)}
-            class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+            className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
           >
             <div className="flex">
               <CiSquarePlus />

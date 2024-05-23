@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Inventorystate from "../inventoryManagement/inventorystate";
 import useLocalStorage from "../../components/localStorage.ts";
 
@@ -10,6 +10,12 @@ function Salesstate() {
   const [salesLog, setSalesLog] = useLocalStorage("salesLog", []);
   const { items, setItems } = Inventorystate();
   const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    if (items.length > 0) {
+      setSelectedProduct(items[0].name);
+    }
+  }, [items]);
 
   const handleSellStock = () => {
     const product = items.find((item) => item.name === selectedProduct);
