@@ -17,7 +17,7 @@ function Background({ children }) {
           <li></li>
         </ul>
       </div>
-      <div>{children}</div>
+      <div className=" text-black">{children}</div>
     </div>
   );
 }

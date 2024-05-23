@@ -35,8 +35,8 @@ const sideBarData = [
         icon: <FaRegUser />
     }
     , {
-        title: 'Teams',
-        path: 's',
+        title: 'Dashboard',
+        path: '/dashboard',
         icon: <FaUserFriends />
     }
 ]

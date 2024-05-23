@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from "react";
-import EditInventory from "./editInvtory";
-import DeleteInventory from "./deleteInventory";
+import EditInventory from "./editInvtory.js";
+import DeleteInventory from "./deleteInventory.js";
+import RestockPopup from "./restockInventory";
+import Alert from "../../components/alert";
 
-const TABLE_HEAD = ["Name", "Number of Stock", "Price", "Actions"];
+const TABLE_HEAD = [
+  "Name",
+  "Number of Stock",
+  "Price",
+  "Cost Price",
+  "Actions",
+];
 
 function InventoryTable({ items, setItems, onRemoveStock }) {
   useEffect(() => {}, [items]);
 
   const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showRestockPopup, setShowRestockPopup] = useState(false);
+  const [restockItemIndex, setRestockItemIndex] = useState(null);
   const [editedIndex, setEditedIndex] = useState(null);
   const [editedStock, setEditedStock] = useState("");
   const [editedPrice, setEditedPrice] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
 
   const handleRemoveStock = (index) => {
     setConfirmDelete(true);
@@ -21,6 +33,8 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
   const confirmRemoveStock = () => {
     onRemoveStock(editedIndex);
     setConfirmDelete(false);
+    setAlertMessage("Item has been deleted!");
+    setAlertType("red");
   };
 
   const cancelRemoveStock = () => {
@@ -58,14 +72,41 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
 
       setItems(updatedItems);
 
+      setAlertMessage(
+        `Successfully updated ${updatedItems[editedIndex].name}.`
+      );
+      setAlertType("green");
+
       closeEditPopup();
     } else {
       console.error(`Invalid index ${editedIndex} provided for saving edit.`);
     }
   };
 
+  const handleRestock = (product, restockAmount) => {
+    const updatedItems = [...items];
+    updatedItems[restockItemIndex].stock += restockAmount;
+    setItems(updatedItems);
+    setAlertMessage(
+      `Successfully restocked ${product} by ${restockAmount} units.`
+    );
+    setAlertType("green");
+
+    setShowRestockPopup(false);
+  };
+
+  const openRestockPopup = (index) => {
+    setRestockItemIndex(index);
+    setShowRestockPopup(true);
+  };
+
+  const closeRestockPopup = () => {
+    setShowRestockPopup(false);
+  };
+
   return (
     <div className="h-full w-full overflow-scroll">
+      <Alert message={alertMessage} type={alertType} />
       {showEditPopup && (
         <EditInventory
           editedStock={editedStock}
@@ -80,6 +121,15 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
           onCancel={cancelRemoveStock}
         />
       )}
+      {showRestockPopup && (
+        <RestockPopup
+          product={items[restockItemIndex].name}
+          currentStock={items[restockItemIndex].stock}
+          price={items[restockItemIndex].price}
+          onRestock={handleRestock}
+          onClose={closeRestockPopup}
+        />
+      )}
       <table className="w-full min-w-max table-auto text-left">
         <thead>
           <tr>
@@ -88,7 +138,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
                 key={head}
                 className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
               >
-                <p className="text-blue-gray text-sm font-normal leading-none ">
+                <p className="text-blue-gray text-sm font-normal leading-none">
                   {head}
                 </p>
               </th>
@@ -97,7 +147,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
         </thead>
         <tbody>
           {items.map((item, index) => (
-            <tr key={index} className=" bg-white">
+            <tr key={index} className="bg-white">
               <td className="p-4">
                 <p className="text-blue-gray text-sm font-normal">
                   {item.name}
@@ -113,6 +163,11 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
                   {item.price}
                 </p>
               </td>
+              <td className="p-4">
+                <p className="text-blue-gray text-sm font-normal">
+                  {item.costPrice}
+                </p>
+              </td>
               <td>
                 <button
                   onClick={() => handleRemoveStock(index)}
@@ -126,7 +181,10 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
                 >
                   Edit Stock Price
                 </button>
-                <button className="bg-green-500 text-white px-4 py-2 rounded">
+                <button
+                  onClick={() => openRestockPopup(index)}
+                  className="bg-green-500 text-white px-4 py-2 rounded"
+                >
                   Restock
                 </button>
               </td>

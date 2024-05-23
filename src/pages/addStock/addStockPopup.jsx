@@ -2,7 +2,6 @@ import React from "react";
 import ReusableLink from "../../components/rusablelink";
 import { Input, IconButton } from "@material-tailwind/react";
 import useTodoState from "../../components/useTodoState";
-import Warning from "../../components/warning";
 
 const AddStockPopup = (props) => {
   const {

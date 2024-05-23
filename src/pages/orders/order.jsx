@@ -43,6 +43,10 @@ function Orders() {
     filterSalesLog();
   }, [salesLog, filterSalesLog]);
 
+  const getFullDateTime = (date, time) => {
+    return new Date(`${date}T${time}`);
+  };
+
   return (
     <Background>
       <h4 className="mb-2 mt-0 text-2xl text-white font-medium leading-tight">
@@ -72,7 +76,11 @@ function Orders() {
               )}
               <div className="max-h-[695px] overflow-y-auto">
                 {Object.keys(groupedSalesLog)
-                  .sort((a, b) => new Date(b) - new Date(a))
+                  .sort(
+                    (a, b) =>
+                      getFullDateTime(a, groupedSalesLog[a][0].time) -
+                      getFullDateTime(b, groupedSalesLog[b][0].time)
+                  )
                   .map((date, dateIndex) => (
                     <React.Fragment key={dateIndex}>
                       <h2 className="text-lg text-white font-medium mb-2 mt-4">
