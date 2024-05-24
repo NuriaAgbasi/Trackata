@@ -3,12 +3,16 @@ import EditInventory from "./editInvtory.js";
 import DeleteInventory from "./deleteInventory.js";
 import RestockPopup from "./restockInventory";
 import Alert from "../../components/alert";
+import { FaArrowUp } from "react-icons/fa";
+import { FaInfoCircle } from "react-icons/fa";
 
 const TABLE_HEAD = [
   "Name",
   "Number of Stock",
-  "Price",
+  "Sale Price",
   "Cost Price",
+  "Profit",
+  "Created Date",
   "Actions",
 ];
 
@@ -146,50 +150,75 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
           </tr>
         </thead>
         <tbody>
-          {items.map((item, index) => (
-            <tr key={index} className="bg-white">
-              <td className="p-4">
-                <p className="text-blue-gray text-sm font-normal">
-                  {item.name}
-                </p>
-              </td>
-              <td className="p-4">
-                <p className="text-blue-gray text-sm font-normal">
-                  {item.stock}
-                </p>
-              </td>
-              <td className="p-4">
-                <p className="text-blue-gray text-sm font-normal">
-                  {item.price}
-                </p>
-              </td>
-              <td className="p-4">
-                <p className="text-blue-gray text-sm font-normal">
-                  {item.costPrice}
-                </p>
-              </td>
-              <td>
-                <button
-                  onClick={() => handleRemoveStock(index)}
-                  className="bg-red-500 text-white px-4 py-2 rounded mr-2"
-                >
-                  Remove Stock
-                </button>
-                <button
-                  onClick={() => handleEditStock(index)}
-                  className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-                >
-                  Edit Stock Price
-                </button>
-                <button
-                  onClick={() => openRestockPopup(index)}
-                  className="bg-green-500 text-white px-4 py-2 rounded"
-                >
-                  Restock
-                </button>
-              </td>
-            </tr>
-          ))}
+          {items.map(
+            (item, index) => (
+              console.log("Item createdAt:", item.createdAt),
+              (
+                <tr key={index} className="bg-white">
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.name}
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.stock}
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.price}
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.costPrice}
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-green-700 text-sm font-normal">
+                      <div className="flex">
+                        {item.profit}
+                        <FaArrowUp />
+                      </div>
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.createdAt
+                        ? new Date(item.createdAt).toLocaleDateString()
+                        : "N/A"}
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <button
+                      onClick={() => handleRemoveStock(index)}
+                      className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                    >
+                      Remove Stock
+                    </button>
+                    <button
+                      onClick={() => handleEditStock(index)}
+                      className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+                    >
+                      Edit Stock Price
+                    </button>
+                    <button
+                      onClick={() => openRestockPopup(index)}
+                      className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+                    >
+                      Restock
+                    </button>
+                    <button className="text-white px-4 py-2 rounded">
+                      <p className="flex text-black">
+                        <FaInfoCircle />
+                      </p>
+                    </button>
+                  </td>
+                </tr>
+              )
+            )
+          )}
         </tbody>
       </table>
     </div>

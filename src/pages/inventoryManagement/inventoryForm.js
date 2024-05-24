@@ -1,11 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
+import Inventorystate from "./inventorystate";
 
 function InventoryForm({ onAddItem, handleClosePopup }) {
-  const [name, setName] = useState("");
-  const [stock, setStock] = useState("");
-  const [price, setPrice] = useState("");
-  const [costPrice, setCostPrice] = useState("");
-  const [error, setError] = useState("");
+  const {
+    name,
+    setName,
+    stock,
+    setStock,
+    price,
+    setPrice,
+    costPrice,
+    setCostPrice,
+    error,
+    setError,
+    resetFields,
+  } = Inventorystate();
+
+  const calculateProfit = () => {
+    const cp = parseFloat(costPrice);
+    const sp = parseFloat(price);
+
+    if (isNaN(cp) || isNaN(sp)) {
+      setError("Invalid cost price or sale price.");
+      return undefined;
+    }
+
+    if (cp > sp) {
+      setError("Cost price is higher than sale price. No profit can be made.");
+      return undefined;
+    }
+
+    const profit = sp - cp;
+    setError(""); 
+    return profit;
+  };
 
   const handleAddItem = () => {
     if (!name || !stock || !price || !costPrice) {
@@ -17,19 +45,22 @@ function InventoryForm({ onAddItem, handleClosePopup }) {
       return;
     }
 
+    const profit = calculateProfit();
+    if (profit === undefined) {
+      return;
+    }
+
     const newItem = {
       name,
       stock: parseInt(stock),
       price: parseFloat(price),
       costPrice: parseFloat(costPrice),
+      profit,
     };
 
     onAddItem(newItem);
-    setName("");
-    setStock("");
-    setPrice("");
-    setCostPrice("");
-    setError("");
+    resetFields();
+    handleClosePopup();
   };
 
   return (

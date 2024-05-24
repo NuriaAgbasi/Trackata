@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PleaseVerifyEmail from "../pages/pleaseVerifyEmail";
 import ReusableCreate from "../components/Create/reusablecreate";
-// import Cookies from "js-cookie";
 import SideBar from "./sideBarFolder/sideBar/sideBar";
 
 const CreateTeam = () => {

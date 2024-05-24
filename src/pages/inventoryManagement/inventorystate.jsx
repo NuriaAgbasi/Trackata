@@ -4,13 +4,30 @@ import useLocalStorage from "../../components/localStorage.ts";
 function Inventorystate() {
   const [items, setItems] = useLocalStorage("inventoryItems", []);
   const [addStockpop, setAddStockPopup] = useState(false);
+  const [name, setName] = useState("");
+  const [stock, setStock] = useState("");
+  const [price, setPrice] = useState("");
+  const [costPrice, setCostPrice] = useState("");
+  const [error, setError] = useState("");
+
+  const resetFields = () => {
+    setName("");
+    setStock("");
+    setPrice("");
+    setCostPrice("");
+    setError("");
+  };
 
   const handleClosePopup = () => {
     setAddStockPopup(false);
   };
 
   const handleAddItem = (newItem) => {
-    setItems([...items, newItem]);
+    const newItemWithDate = {
+      ...newItem,
+      createdAt: new Date().toISOString(),
+    };
+    setItems([...items, newItemWithDate]);
   };
 
   const handleRemoveStock = (index) => {
@@ -27,6 +44,54 @@ function Inventorystate() {
 
     setItems(updatedItems);
   };
+
+  const calculateProfit = () => {
+    const cp = parseFloat(costPrice);
+    const sp = parseFloat(price);
+
+    if (isNaN(cp) || isNaN(sp)) {
+      setError("Invalid cost price or sale price.");
+      return;
+    }
+
+    if (cp > sp) {
+      setError("Cost price is higher than sale price. No profit can be made.");
+      return;
+    }
+
+    const profit = sp - cp;
+    setError("");
+    return profit;
+  };
+
+  const handleSaveItem = () => {
+    const profit = calculateProfit();
+    if (profit !== undefined) {
+      const newItemWithDate = {
+        name,
+        stock: parseInt(stock, 10),
+        price: parseFloat(price),
+        costPrice: parseFloat(costPrice),
+        profit,
+        createdAt: new Date().toISOString(),
+      };
+      handleAddItem(newItemWithDate);
+      resetFields();
+      handleClosePopup();
+    }
+  };
+
+  const calculateTotalProfit = () => {
+    return items.reduce((total, item) => total + item.profit * item.stock, 0);
+  };
+
+  const calculateTotalCapital = () => {
+    return items.reduce(
+      (total, item) => total + item.costPrice * item.stock,
+      0
+    );
+  };
+
   return {
     items,
     setItems,
@@ -36,6 +101,20 @@ function Inventorystate() {
     handleRemoveStock,
     handleAddItem,
     handleClosePopup,
+    name,
+    setName,
+    stock,
+    setStock,
+    price,
+    setPrice,
+    costPrice,
+    setCostPrice,
+    error,
+    setError,
+    resetFields,
+    handleSaveItem,
+    calculateTotalProfit,
+    calculateTotalCapital,
   };
 }
 
