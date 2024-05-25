@@ -69,15 +69,13 @@ const TodoListState = ({
       return stock;
     });
 
-    // Update sales log
     const newSalesLogEntry = {
       itemName: selectedItem.text,
       quantitySold: salesAmount,
-      timestamp: new Date().toLocaleString(), // Current timestamp
+      timestamp: new Date().toLocaleString(),
     };
     setSalesLog([...salesLog, newSalesLogEntry]);
 
-    // Update stock
     setNumberofStock(updatedStock);
     setSalesPopup(false);
   };
