@@ -11,13 +11,13 @@ const Alert = ({ message, type, duration = 3000 }) => {
             }, duration);
             return () => clearTimeout(timeout);
         }
-    }, [message, duration]);
+    }, [message, type, duration]);
+
     const alertClasses = `rounded-md p-4 bg-${type}-100 text-${type}-700 border border-${type}-200`;
 
     return (
         <div
-            className={`fixed top-4 right-4 z-50 ${visible ? "block" : "hidden"
-                } transition duration-300 ease-in-out`}
+            className={`fixed top-4 right-4 z-50 ${visible ? "block" : "hidden"} transition duration-300 ease-in-out`}
         >
             <div className={alertClasses}>
                 {message}

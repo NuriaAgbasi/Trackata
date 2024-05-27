@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
-const EditInventory = ({ editedStock, editedPrice, onSave, onClose }) => {
+const EditInventory = ({ editedStock, editedPrice, editedCost, onSave, onClose }) => {
     const [newStock, setNewStock] = useState(editedStock);
     const [newPrice, setNewPrice] = useState(editedPrice);
+    const [newCost, setNewCost] = useState(editedCost);
 
     const handleStockChange = (e) => {
         setNewStock(parseInt(e.target.value));
@@ -12,8 +13,12 @@ const EditInventory = ({ editedStock, editedPrice, onSave, onClose }) => {
         setNewPrice(parseFloat(e.target.value));
     };
 
+    const handleCostChange = (e) => {
+        setNewCost(parseFloat(e.target.value));
+    };
+
     const handleSave = () => {
-        onSave(newStock, newPrice);
+        onSave(newStock, newPrice, newCost);
     };
 
     return (
@@ -34,11 +39,15 @@ const EditInventory = ({ editedStock, editedPrice, onSave, onClose }) => {
                                 Edit
                             </h4>
                             <div className="relative mb-3" data-twe-input-wrapper-init>
-                                <input type="number" value={newStock} readOnly onChange={handleStockChange} className="input input-bordered w-full bg-blue " />
+                                <input type="number" value={newStock} onChange={handleStockChange} className="input input-bordered w-full bg-blue " />
                             </div>
                             <br />
                             <div className="relative mb-3" data-twe-input-wrapper-init>
-                                <input type="number" value={newPrice} onChange={handlePriceChange} placeholder="Number of Stock" className="input input-bordered w-full bg-blue" />
+                                <input type="number" value={newPrice} onChange={handlePriceChange} placeholder="Edit Price" className="input input-bordered w-full bg-blue" />
+                            </div>
+                            <br />
+                            <div className="relative mb-3" data-twe-input-wrapper-init>
+                                <input type="number" value={newCost} onChange={handleCostChange} placeholder="Edit Cost" className="input input-bordered w-full bg-blue" />
                             </div>
                             <br />
                             <div className="flex">

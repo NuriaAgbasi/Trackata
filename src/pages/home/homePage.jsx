@@ -1,8 +1,7 @@
 import ReusableLink from "../..//components/rusablelink";
-import "./home.css";
 import Image from "../../image/image1.jpeg";
 import { useState } from "react";
-import AddStock from "../addStock/addStock";
+import Inventory from "../inventoryManagement/Inventory";
 import Typewriter from "./typeWriter";
 import Background from "../../components/background";
 
@@ -21,7 +20,7 @@ const Home = () => {
   return (
     <ReusableLink>
       {clicked ? (
-        <AddStock />
+        <Inventory />
       ) : (
         <Background>
           <div className="flex justify-center items-center">
