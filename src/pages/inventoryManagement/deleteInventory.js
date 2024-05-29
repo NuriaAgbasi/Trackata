@@ -1,7 +1,6 @@
 import React from "react";
 
-const DeleteInventory = ({ onConfirm, onCancel }) => {
-
+const DeleteInventory = ({ handleActionConfirmation, onCancel }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center">
       <div className="w-full px-4">
@@ -28,7 +27,7 @@ const DeleteInventory = ({ onConfirm, onCancel }) => {
               <div className="flex">
                 <button
                   type="button"
-                  onClick={onConfirm}
+                  onClick={handleActionConfirmation}
                   data-twe-ripple-init
                   data-twe-ripple-color="light"
                   className="ml-40 bg-red-800 mr-2 inline-block rounded  px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">

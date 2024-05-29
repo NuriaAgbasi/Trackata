@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { countContext } from "../../components/context.js";
 
-const EditInventory = ({ editedStock, editedPrice, editedCost, onSave, onClose }) => {
+const EditInventory = () => {
+
+    const { editedStock, editedPrice, editedCost, handleSaveEdit, closePopup } = useContext(countContext);
     const [newStock, setNewStock] = useState(editedStock);
     const [newPrice, setNewPrice] = useState(editedPrice);
     const [newCost, setNewCost] = useState(editedCost);
@@ -18,7 +21,7 @@ const EditInventory = ({ editedStock, editedPrice, editedCost, onSave, onClose }
     };
 
     const handleSave = () => {
-        onSave(newStock, newPrice, newCost);
+        handleSaveEdit(newStock, newPrice, newCost);
     };
 
     return (
@@ -29,7 +32,7 @@ const EditInventory = ({ editedStock, editedPrice, editedCost, onSave, onClose }
                         <div className="bg-white p-10 rounded-md shadow-md">
                             <button
                                 type="button"
-                                onClick={onClose}
+                                onClick={closePopup}
                                 data-twe-ripple-init
                                 data-twe-ripple-color="light"
                                 className=" bg-red-600 close inline-block rounded  px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
@@ -61,7 +64,7 @@ const EditInventory = ({ editedStock, editedPrice, editedCost, onSave, onClose }
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={onClose}
+                                    onClick={closePopup}
                                     data-twe-ripple-init
                                     data-twe-ripple-color="light"
                                     className=" bg-orange-400 ml-2 inline-block rounded  px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
