@@ -142,7 +142,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
         {popupType === "edit" && <EditInventory />}
         {confirmDelete && (
           <DeleteInventory
-            handleActionConfirmation={confirmRemoveStock} // Pass the function here
+            handleActionConfirmation={confirmRemoveStock}
             onCancel={cancelRemoveStock}
           />
         )}

@@ -50,7 +50,7 @@ const CreateUser = () => {
           error={error}
           handleInputChange={handleInputChange}
           handleRegistration={handleRegistration}
-          username={formData.username} // Pass username here
+          username={formData.username} 
         />
       )}
     </div>
