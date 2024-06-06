@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
-const Typewriter = () => {
-  const words = ["Hello, There!", "Welcome to Stocks!"];
+const Typewriter: React.FC = () => {
+  const words = useMemo(() => ["Hello, There!", "Welcome to Stocks!"], []);
   const [index, setIndex] = useState(0);
   const [position, setPosition] = useState(0);
   const [currentWord, setCurrentWord] = useState(words[0]);

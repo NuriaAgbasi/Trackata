@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Inventorystate from "../inventoryManagement/inventorystate";
+import Inventorystate from "../inventoryManagement/inventorystate.jsx";
 import useLocalStorage from "../../components/localStorage.ts";
 
 function Salesstate() {

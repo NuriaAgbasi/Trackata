@@ -1,8 +1,8 @@
 import React from "react";
-import InventoryForm from "./inventoryForm";
+import InventoryForm from "./inventoryForm.tsx";
 import InventoryTable from "./inventoryTable.jsx";
 import { CiSquarePlus } from "react-icons/ci";
-import Background from "../../components/background.jsx";
+import Background from "../../components/background.tsx";
 import Inventorystate from "./inventorystate.jsx";
 
 function Inventory() {

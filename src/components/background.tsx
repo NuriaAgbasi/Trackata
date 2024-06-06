@@ -1,6 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-function Background({ children }) {
+interface BackgroundProps {
+  children: ReactNode;
+}
+
+function Background({ children }: BackgroundProps) {
   return (
     <div>
       <div className="area">
@@ -17,7 +21,7 @@ function Background({ children }) {
           <li></li>
         </ul>
       </div>
-      <div className=" text-black">{children}</div>
+      <div className="text-black">{children}</div>
     </div>
   );
 }

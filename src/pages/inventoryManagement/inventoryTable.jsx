@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import EditInventory from "./editInvtory.js";
+import EditInventory from "./EditInventory.jsx";
 import DeleteInventory from "./deleteInventory.js";
 import RestockPopup from "./restockInventory";
-import Info from "./info.js";
-import Alert from "../../components/alert";
+import Info from "./info.tsx";
+import Alert from "../../components/Alert.tsx";
 import { FaArrowUp, FaInfoCircle } from "react-icons/fa";
 import { countContext } from "../../components/context.js";
 

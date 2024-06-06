@@ -1,6 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 
-const ReusableOnloading = ({ content, children, time }) => {
+interface ReusableOnloadingProps {
+  content: ReactNode;
+  children: ReactNode;
+  time: number;
+}
+
+const ReusableOnloading: React.FC<ReusableOnloadingProps> = ({
+  content,
+  children,
+  time,
+}) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

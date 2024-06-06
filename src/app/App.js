@@ -6,7 +6,6 @@ import HomePage from "../pages/home/homePage";
 import Orders from "../pages/orders/order";
 import Inventory from "../pages/inventoryManagement/Inventory";
 import SideBar from "../pages/sideBarFolder/sideBar/sideBar";
-import Teams from "../pages/teams";
 import Profile from "../pages/profile";
 import Dashboard from "../pages/dashboard/dashboard";
 

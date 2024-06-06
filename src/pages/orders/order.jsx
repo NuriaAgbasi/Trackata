@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Salesstate from "../sales/salesstate";
-import Background from "../../components/background.jsx";
+import Background from "../../components/background.tsx";
 
 function Orders() {
   const { salesLog } = Salesstate();

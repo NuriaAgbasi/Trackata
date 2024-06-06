@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-const Alert = ({ message, type, duration = 3000 }) => {
+interface AlertProps {
+    message: string;
+    type: 'success' | 'error' | 'info' | 'warning';
+    duration?: number;
+}
+
+const Alert: React.FC<AlertProps> = ({ message, type, duration = 3000 }) => {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {

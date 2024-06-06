@@ -1,7 +1,18 @@
 import React from "react";
-import Inventorystate from "./inventorystate";
+import Inventorystate from "./inventorystate.jsx";
 
-function InventoryForm({ onAddItem, handleClosePopup }) {
+interface InventoryFormProps {
+  onAddItem: (item: {
+    name: string;
+    stock: number;
+    price: number;
+    costPrice: number;
+    profit: number;
+  }) => void;
+  handleClosePopup: () => void;
+}
+
+const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
   const {
     name,
     setName,
@@ -16,7 +27,7 @@ function InventoryForm({ onAddItem, handleClosePopup }) {
     resetFields,
   } = Inventorystate();
 
-  const calculateProfit = () => {
+  const calculateProfit = (): number | undefined => {
     const cp = parseFloat(costPrice);
     const sp = parseFloat(price);
 
@@ -31,7 +42,7 @@ function InventoryForm({ onAddItem, handleClosePopup }) {
     }
 
     const profit = sp - cp;
-    setError(""); 
+    setError("");
     return profit;
   };
 
@@ -40,7 +51,11 @@ function InventoryForm({ onAddItem, handleClosePopup }) {
       setError("Please input all fields");
       return;
     }
-    if (isNaN(stock) || isNaN(price) || isNaN(costPrice)) {
+    if (
+      isNaN(Number(stock)) ||
+      isNaN(Number(price)) ||
+      isNaN(Number(costPrice))
+    ) {
       setError("Please enter valid numbers for stock, price, and cost price");
       return;
     }
@@ -52,7 +67,7 @@ function InventoryForm({ onAddItem, handleClosePopup }) {
 
     const newItem = {
       name,
-      stock: parseInt(stock),
+      stock: parseInt(stock, 10),
       price: parseFloat(price),
       costPrice: parseFloat(costPrice),
       profit,
@@ -133,6 +148,6 @@ function InventoryForm({ onAddItem, handleClosePopup }) {
       </div>
     </div>
   );
-}
+};
 
 export default InventoryForm;

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Background from "../../components/background.jsx";
+import Background from "../../components/background.tsx";
 import Salesstate from "./salesstate.jsx";
 function Sales() {
   const {

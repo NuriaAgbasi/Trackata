@@ -1,4 +1,4 @@
-import Background from "../components/background";
+import Background from "../components/background.tsx";
 const Profile = () => {
   return <Background>Profile</Background>;
 };

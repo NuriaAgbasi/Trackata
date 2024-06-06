@@ -2,8 +2,8 @@ import ReusableLink from "../..//components/rusablelink";
 import Image from "../../image/image1.jpeg";
 import { useState } from "react";
 import Inventory from "../inventoryManagement/Inventory";
-import Typewriter from "./typeWriter";
-import Background from "../../components/background";
+import Typewriter from "./typeWriter.tsx";
+import Background from "../../components/background.tsx";
 
 // ToDo: Create a SideBAR navigation that comtains the following: Inventory, Sales, Orders, Dashboard, Team, Profile
 // Make it a signle page application
@@ -38,14 +38,14 @@ const Home = () => {
               </div>
               <div className="relative inline-flex ml-40 group">
                 <div className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt"></div>
-                <a
+                <div
                   onClick={handleOnclick}
                   title="Input"
                   className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gray-900 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                   role="button"
                 >
                   Input now
-                </a>
+                </div>
               </div>
             </div>
             <div className="w-1/3 mt-56 mr-20 flex items-center justify-center">

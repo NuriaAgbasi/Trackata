@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useLocalStorage from "../../components/localStorage.ts";
+import { format, parseISO } from "date-fns";
 
 function Inventorystate() {
   const [items, setItems] = useLocalStorage("inventoryItems", []);
@@ -92,6 +93,22 @@ function Inventorystate() {
     );
   };
 
+  const calculateDailyProfits = () => {
+    const profitsByDate = {};
+
+    items.forEach((item) => {
+      const date = format(parseISO(item.createdAt), "yyyy-MM-dd");
+      const dailyProfit = item.profit * item.stock;
+      if (profitsByDate[date]) {
+        profitsByDate[date] += dailyProfit;
+      } else {
+        profitsByDate[date] = dailyProfit;
+      }
+    });
+
+    return profitsByDate;
+  };
+
   return {
     items,
     setItems,
@@ -115,6 +132,7 @@ function Inventorystate() {
     handleSaveItem,
     calculateTotalProfit,
     calculateTotalCapital,
+    calculateDailyProfits,
   };
 }
 
