@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useLocalStorage from "../../components/localStorage.ts";
 import { format, parseISO } from "date-fns";
 
@@ -105,6 +105,8 @@ function Inventorystate() {
         profitsByDate[date] = dailyProfit;
       }
     });
+
+    console.log("Calculated daily profits:", profitsByDate);
 
     return profitsByDate;
   };

@@ -6,6 +6,7 @@ function Salesstate() {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [quantitySold, setQuantitySold] = useState("");
   const [customerName, setCustomerName] = useState("");
+  const [price, setPrice] = useState("");
   const [error, setError] = useState(null);
   const [salesLog, setSalesLog] = useLocalStorage("salesLog", []);
   const { items, setItems } = Inventorystate();
@@ -14,6 +15,8 @@ function Salesstate() {
   useEffect(() => {
     if (items.length > 0) {
       setSelectedProduct(items[0].name);
+      const product = items.find((item) => item.name === items[0].name);
+      setPrice(product ? product.price : 0);
     }
   }, [items]);
 
@@ -29,7 +32,10 @@ function Salesstate() {
       setError("Input the customer name");
       return;
     }
-
+    if (!quantitySold || parseInt(quantitySold) <= 0) {
+      setError("Please input a valid quantity of the product");
+      return;
+    }
     const remainingStock = product.stock - parseInt(quantitySold);
     if (remainingStock < 0) {
       setError(
@@ -37,6 +43,8 @@ function Salesstate() {
       );
       return;
     }
+
+    const priceToUse = price || product.price;
     const updatedItems = items.map((item) =>
       item.name === selectedProduct ? { ...item, stock: remainingStock } : item
     );
@@ -49,6 +57,7 @@ function Salesstate() {
       time: saleTime,
       product: selectedProduct,
       quantity: parseInt(quantitySold),
+      price: priceToUse,
       customer: customerName,
     };
     setSalesLog([...salesLog, newSale]);
@@ -64,6 +73,55 @@ function Salesstate() {
     }, 10000);
     return () => clearTimeout(timer);
   };
+
+  const calculateDailyProfits = () => {
+    const profits = {};
+
+    salesLog.forEach((sale) => {
+      const saleDate = sale.date;
+      const saleProfit = sale.price * sale.quantity;
+
+      if (isNaN(saleProfit)) {
+        console.log("Invalid sale data for date", saleDate, ":", sale);
+      }
+
+      if (!profits[saleDate]) {
+        profits[saleDate] = 0;
+      }
+      profits[saleDate] += saleProfit;
+    });
+
+    console.log("Daily Profits:", profits);
+
+    return Object.entries(profits).map(([date, profit]) => ({
+      date,
+      profit,
+    }));
+  };
+
+  const getTotalSales = () => {
+    return salesLog.length;
+  };
+
+  const getTopFourProfitableProducts = () => {
+    const productProfits = {};
+
+    salesLog.forEach((sale) => {
+      const saleProfit = sale.price * sale.quantity;
+
+      if (!productProfits[sale.product]) {
+        productProfits[sale.product] = 0;
+      }
+      productProfits[sale.product] += saleProfit;
+    });
+
+    const sortedProducts = Object.entries(productProfits)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 4);
+
+    return sortedProducts.map(([product, profit]) => ({ product, profit }));
+  };
+
   return {
     selectedProduct,
     setSelectedProduct,
@@ -80,6 +138,11 @@ function Salesstate() {
     handleSellStock,
     items,
     setItems,
+    price,
+    setPrice,
+    calculateDailyProfits,
+    getTotalSales,
+    getTopFourProfitableProducts,
   };
 }
 

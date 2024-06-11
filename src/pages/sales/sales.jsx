@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Background from "../../components/background.tsx";
 import Salesstate from "./salesstate.jsx";
+
 function Sales() {
   const {
     selectedProduct,
@@ -14,7 +15,16 @@ function Sales() {
     setSuccessMessage,
     handleSellStock,
     items,
+    price,
+    setPrice,
   } = Salesstate();
+
+  useEffect(() => {
+    const product = items.find((item) => item.name === selectedProduct);
+    if (product) {
+      setPrice(product.price || 0);
+    }
+  }, [selectedProduct, items, setPrice]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -27,7 +37,7 @@ function Sales() {
     <Background>
       <div>
         <select
-          className="select w-full max-w-xs"
+          className="select w-full max-w-xs bg-blue"
           value={selectedProduct}
           onChange={(e) => setSelectedProduct(e.target.value)}
         >
@@ -43,14 +53,21 @@ function Sales() {
           placeholder="Quantity Sold"
           value={quantitySold}
           onChange={(e) => setQuantitySold(e.target.value)}
-          className="input input-bordered w-full max-w-xs"
+          className="bg-blue input input-bordered w-full max-w-xs"
         />
         <input
           type="text"
           placeholder="Customer Name"
           value={customerName}
           onChange={(e) => setCustomerName(e.target.value)}
-          className="input input-bordered w-full max-w-xs"
+          className="bg-blue input input-bordered w-full max-w-xs"
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          className="bg-blue input input-bordered w-full max-w-xs"
         />
         <button
           type="button"

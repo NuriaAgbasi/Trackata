@@ -179,73 +179,74 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
             </tr>
           </thead>
           <tbody>
-            {items.map((item, index) => (
-              <tr key={index} className="bg-white">
-                <td className="p-4">
-                  <p className="text-blue-gray text-sm font-normal">
-                    {item.name}
-                  </p>
-                </td>
-                <td className="p-4">
-                  <p className="text-blue-gray text-sm font-normal">
-                    {item.stock}
-                  </p>
-                </td>
-                <td className="p-4">
-                  <p className="text-blue-gray text-sm font-normal">
-                    {item.price}
-                  </p>
-                </td>
-                <td className="p-4">
-                  <p className="text-blue-gray text-sm font-normal">
-                    {item.costPrice}
-                  </p>
-                </td>
-                <td className="p-4">
-                  <p className="text-green-700 text-sm font-normal">
-                    <span className="flex">
-                      {item.profit}
-                      <FaArrowUp />
-                    </span>
-                  </p>
-                </td>
-                <td className="p-4">
-                  <p className="text-blue-gray text-sm font-normal">
-                    {item.createdAt
-                      ? new Date(item.createdAt).toLocaleDateString()
-                      : "N/A"}
-                  </p>
-                </td>
-                <td className="p-4">
-                  <button
-                    onClick={() => handleRemoveStock(index)}
-                    className="bg-red-500 text-white px-4 py-2 rounded mr-2"
-                  >
-                    Remove Stock
-                  </button>
-                  <button
-                    onClick={() => handleEditStock(index)}
-                    className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-                  >
-                    Edit Stock Price
-                  </button>
-                  <button
-                    onClick={() => openPopup("restock", index)}
-                    className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-                  >
-                    Restock
-                  </button>
-                  <button
-                    onClick={() => openPopup("info", index)}
-                    className="text-white px-4 py-2 rounded"
-                  >
-                    <p className="flex text-black">
-                      <FaInfoCircle />
+            {items &&
+              items.map((item, index) => (
+                <tr key={index} className="bg-white">
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.name}
                     </p>
-                  </button>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.stock}
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.price}
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.costPrice}
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-green-700 text-sm font-normal">
+                      <span className="flex">
+                        {item.profit}
+                        <FaArrowUp />
+                      </span>
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-blue-gray text-sm font-normal">
+                      {item.createdAt
+                        ? new Date(item.createdAt).toLocaleDateString()
+                        : "N/A"}
+                    </p>
+                  </td>
+                  <td className="p-4">
+                    <button
+                      onClick={() => handleRemoveStock(index)}
+                      className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                    >
+                      Remove Stock
+                    </button>
+                    <button
+                      onClick={() => handleEditStock(index)}
+                      className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+                    >
+                      Edit Stock Price
+                    </button>
+                    <button
+                      onClick={() => openPopup("restock", index)}
+                      className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+                    >
+                      Restock
+                    </button>
+                    <button
+                      onClick={() => openPopup("info", index)}
+                      className="text-white px-4 py-2 rounded"
+                    >
+                      <p className="flex text-black">
+                        <FaInfoCircle />
+                      </p>
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

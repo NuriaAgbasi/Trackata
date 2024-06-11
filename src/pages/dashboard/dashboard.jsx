@@ -2,17 +2,21 @@ import React from "react";
 import Background from "../../components/background.tsx";
 import Cards from "./cards";
 import Inventorystate from "../inventoryManagement/inventorystate.jsx";
-import { MdOutlineShoppingBag } from "react-icons/md";
+import { MdOutlineShoppingBag, MdOutlineAttachMoney } from "react-icons/md";
 import { GiProfit } from "react-icons/gi";
 import { TbMoneybag } from "react-icons/tb";
-import LineChart from "./linechart/linechart.tsx";
+import ProfitChart from "./linechart/linechart.js";
+import Salesstate from "../sales/salesstate.jsx";
+import MostSoldProduct from "./mostsoldproduct.jsx";
 
 function Dashboard() {
   const { items, calculateTotalProfit, calculateTotalCapital } =
     Inventorystate();
-
+  const { getTotalSales } = Salesstate();
   const totalProfit = calculateTotalProfit();
   const totalCapital = calculateTotalCapital();
+
+  const totalSales = getTotalSales();
 
   return (
     <Background>
@@ -30,10 +34,19 @@ function Dashboard() {
         >
           <TbMoneybag />
         </Cards>
+        <Cards title="Total Sales" cardContent={totalSales}>
+          <MdOutlineAttachMoney />
+        </Cards>
       </div>
-      <div className="mt-8 w-1/2">
-        {" "}
-        <LineChart />
+      <div className="flex space-x-4">
+        <div className="w-1/2 rounded-lg shadow-md m-2">
+          <div className="rounded-lg overflow-hidden">
+            <ProfitChart />
+          </div>
+        </div>
+        <div className="w-1/2 rounded-lg shadow-md m-2 p-4 bg-white dark:bg-gray-800">
+          <MostSoldProduct />
+        </div>
       </div>
     </Background>
   );

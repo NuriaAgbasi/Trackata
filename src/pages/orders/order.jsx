@@ -1,12 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Salesstate from "../sales/salesstate";
 import Background from "../../components/background.tsx";
+import ClearLogsModal from "./clearlogsmodal.tsx";
 
 function Orders() {
-  const { salesLog } = Salesstate();
+  const { salesLog, items, setSalesLog } = Salesstate();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSalesLog, setFilteredSalesLog] = useState(salesLog);
   const [searchError, setSearchError] = useState("");
+  const [clearError, setClearError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const defaultPrices = items.reduce((acc, item) => {
+    acc[item.name] = item.price;
+    return acc;
+  }, {});
 
   const groupedSalesLog = filteredSalesLog.reduce((acc, sale) => {
     const date = sale.date;
@@ -39,6 +47,31 @@ function Orders() {
     setSearchQuery(e.target.value);
   };
 
+  const handleClearLogs = (clearByDate, clearPassword) => {
+    const correctPassword = "yourpassword";
+    if (clearPassword !== correctPassword) {
+      setClearError("Incorrect password.");
+      return;
+    }
+
+    const date = new Date(clearByDate);
+
+    if (isNaN(date)) {
+      setClearError("Invalid date format.");
+      return;
+    }
+
+    const newSalesLog = salesLog.filter((sale) => new Date(sale.date) !== date);
+
+    if (newSalesLog.length === salesLog.length) {
+      setClearError("No logs found for the specified date.");
+    } else {
+      setSalesLog(newSalesLog);
+      setClearError("");
+      setShowModal(false);
+    }
+  };
+
   useEffect(() => {
     filterSalesLog();
   }, [salesLog, filterSalesLog]);
@@ -62,7 +95,7 @@ function Orders() {
                   placeholder="Search by product name or date..."
                   value={searchQuery}
                   onChange={handleInputChange}
-                  className="input input-bordered w-full "
+                  className="bg-blue input input-bordered w-full "
                 />
                 <button
                   onClick={handleSearch}
@@ -70,16 +103,28 @@ function Orders() {
                 >
                   Search
                 </button>
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-red-500 transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-red-600 focus:bg-red-700 focus:shadow-red-600 focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-red-700 motion-reduce:transition-none"
+                >
+                  Clear Logs
+                </button>
               </div>
               {searchError && (
                 <div className="text-red-500 mb-4">{searchError}</div>
               )}
+              <ClearLogsModal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                handleClearLogs={handleClearLogs}
+                clearError={clearError}
+              />
               <div className="max-h-[695px] overflow-y-auto">
                 {Object.keys(groupedSalesLog)
                   .sort(
                     (a, b) =>
-                      getFullDateTime(a, groupedSalesLog[a][0].time) -
-                      getFullDateTime(b, groupedSalesLog[b][0].time)
+                      getFullDateTime(b, groupedSalesLog[b][0].time) -
+                      getFullDateTime(a, groupedSalesLog[a][0].time)
                   )
                   .map((date, dateIndex) => (
                     <React.Fragment key={dateIndex}>
@@ -104,21 +149,33 @@ function Orders() {
                             <th scope="col" className="px-6 py-4">
                               Product
                             </th>
+                            <th scope="col" className="px-6 py-4">
+                              Price
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
-                          {groupedSalesLog[date].map((sale, index) => (
-                            <tr
-                              key={index}
-                              className="border-b text-white border-neutral-200 dark:border-white/10"
-                            >
-                              <td className="px-6 py-4">{index}</td>
-                              <td className="px-6 py-4">{sale.time}</td>
-                              <td className="px-6 py-4">{sale.customer}</td>
-                              <td className="px-6 py-4">{sale.quantity}</td>
-                              <td className="px-6 py-4">{sale.product}</td>
-                            </tr>
-                          ))}
+                          {groupedSalesLog[date]
+                            .sort(
+                              (a, b) =>
+                                getFullDateTime(b.date, b.time) -
+                                getFullDateTime(a.date, a.time)
+                            )
+                            .map((sale, index) => (
+                              <tr
+                                key={index}
+                                className="border-b text-white border-neutral-200 dark:border-white/10"
+                              >
+                                <td className="px-6 py-4">{index}</td>
+                                <td className="px-6 py-4">{sale.time}</td>
+                                <td className="px-6 py-4">{sale.customer}</td>
+                                <td className="px-6 py-4">{sale.quantity}</td>
+                                <td className="px-6 py-4">{sale.product}</td>
+                                <td className="px-6 py-4">
+                                  {sale.price || defaultPrices[sale.product]}
+                                </td>
+                              </tr>
+                            ))}
                         </tbody>
                       </table>
                     </React.Fragment>

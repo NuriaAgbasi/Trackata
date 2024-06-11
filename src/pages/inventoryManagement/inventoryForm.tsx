@@ -100,7 +100,7 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Name"
-                  className="input input-bordered w-full"
+                  className="bg-blue input input-bordered w-full"
                 />
               </div>
               <br />
@@ -110,7 +110,7 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                   placeholder="Number of Stock"
-                  className="input input-bordered w-full"
+                  className="bg-blue input input-bordered w-full"
                 />
               </div>
               <br />
@@ -120,7 +120,7 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   placeholder="Price"
-                  className="input input-bordered w-full"
+                  className="bg-blue input input-bordered w-full"
                 />
               </div>
               <br />
@@ -130,7 +130,7 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
                   value={costPrice}
                   onChange={(e) => setCostPrice(e.target.value)}
                   placeholder="Cost Price"
-                  className="input input-bordered w-full"
+                  className="bg-blue input input-bordered w-full"
                 />
               </div>
               <br />

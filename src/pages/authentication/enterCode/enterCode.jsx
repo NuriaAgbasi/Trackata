@@ -32,20 +32,21 @@ const EnterCode = () => {
             Enter your verification code
           </label>
           <div className="input-container">
-            {numberValues.map((value, index) => (
-              <input
-                key={index}
-                type="text"
-                minLength="1"
-                maxLength="1"
-                name={`numericInput${index}`}
-                value={value}
-                x
-                onChange={(e) => handleInputChange(index, e.target.value)}
-                required
-                className="verification-input"
-              />
-            ))}
+            {numberValues &&
+              numberValues.map((value, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  minLength="1"
+                  maxLength="1"
+                  name={`numericInput${index}`}
+                  value={value}
+                  x
+                  onChange={(e) => handleInputChange(index, e.target.value)}
+                  required
+                  className="verification-input"
+                />
+              ))}
           </div>
           <button type="submit" className="button">
             Verify
