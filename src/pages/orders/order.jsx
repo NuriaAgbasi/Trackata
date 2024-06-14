@@ -81,10 +81,15 @@ function Orders() {
   };
 
   return (
-    <Background>
-      <h4 className="mb-2 mt-0 text-2xl text-white font-medium leading-tight">
-        Orders Log
-      </h4>
+    <Background className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
+      <header className="mb-12 text-center">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+          Sales History
+        </h1>
+        <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
+          Keeping Track of your success
+        </p>
+      </header>
       <div className="flex flex-col">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -95,11 +100,11 @@ function Orders() {
                   placeholder="Search by product name or date..."
                   value={searchQuery}
                   onChange={handleInputChange}
-                  className="bg-blue input input-bordered w-full "
+                  className="bg-white mr-6 input input-bordered w-full "
                 />
                 <button
                   onClick={handleSearch}
-                  className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                  className="inline-block bg-teal-400 rounded mr-4 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                 >
                   Search
                 </button>
@@ -132,7 +137,7 @@ function Orders() {
                         {date}
                       </h2>
                       <table className="min-w-full text-left text-sm font-light text-surface dark:text-white">
-                        <thead className="border-b text-white border-neutral-200 font-medium dark:border-white/10">
+                        <thead className="border-b text-black border-neutral-200 font-medium dark:border-white/10">
                           <tr>
                             <th scope="col" className="px-6 py-4">
                               Order Id

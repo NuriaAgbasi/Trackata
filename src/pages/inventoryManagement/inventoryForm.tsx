@@ -91,7 +91,7 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
               >
                 &times;
               </button>
-              <h4 className="text-blue mb-6 mt-10 ml-40 text-2xl font-medium leading-tight">
+              <h4 className="text-teal-200 mb-6 mt-10 ml-40 text-2xl font-medium leading-tight">
                 Create A New Item
               </h4>
               <div className="relative mb-3">
@@ -100,7 +100,7 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Name"
-                  className="bg-blue input input-bordered w-full"
+                  className="bg-teal-300 input input-bordered w-full"
                 />
               </div>
               <br />
@@ -110,7 +110,7 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                   placeholder="Number of Stock"
-                  className="bg-blue input input-bordered w-full"
+                  className="bg-teal-300 input input-bordered w-full"
                 />
               </div>
               <br />
@@ -120,7 +120,7 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   placeholder="Price"
-                  className="bg-blue input input-bordered w-full"
+                  className="bg-teal-300 input input-bordered w-full"
                 />
               </div>
               <br />
@@ -130,7 +130,7 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
                   value={costPrice}
                   onChange={(e) => setCostPrice(e.target.value)}
                   placeholder="Cost Price"
-                  className="bg-blue input input-bordered w-full"
+                  className="bg-teal-300 input input-bordered w-full"
                 />
               </div>
               <br />

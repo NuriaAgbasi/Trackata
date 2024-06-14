@@ -33,6 +33,7 @@
     "tw-elements-react": "^1.0.0-alpha-end",
     "typescript": "^4.5.4",
     "usehooks-ts": "^3.0.2",
+    "victory": "^37.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

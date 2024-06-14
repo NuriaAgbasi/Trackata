@@ -39,7 +39,7 @@ const EditInventory = () => {
               >
                 &times;
               </button>
-              <h4 className=" text-blue mb-6 mt-10 ml-40  text-2xl font-medium leading-tight">
+              <h4 className=" text-teal-300 mb-6 mt-10 ml-40  text-2xl font-medium leading-tight">
                 Edit
               </h4>
               <div className="relative mb-3" data-twe-input-wrapper-init>
@@ -47,7 +47,7 @@ const EditInventory = () => {
                   type="number"
                   value={newStock}
                   onChange={handleStockChange}
-                  className="input input-bordered w-full bg-blue "
+                  className="input input-bordered w-full bg-teal-200 "
                 />
               </div>
               <br />
@@ -57,7 +57,7 @@ const EditInventory = () => {
                   value={newPrice}
                   onChange={handlePriceChange}
                   placeholder="Edit Price"
-                  className="input input-bordered w-full bg-blue"
+                  className="input input-bordered w-full bg-teal-200"
                 />
               </div>
               <br />
@@ -67,7 +67,7 @@ const EditInventory = () => {
                   value={newCost}
                   onChange={handleCostChange}
                   placeholder="Edit Cost"
-                  className="input input-bordered w-full bg-blue"
+                  className="input input-bordered w-full bg-teal-200"
                 />
               </div>
               <br />

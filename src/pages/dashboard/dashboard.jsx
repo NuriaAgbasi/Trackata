@@ -15,39 +15,54 @@ function Dashboard() {
   const { getTotalSales } = Salesstate();
   const totalProfit = calculateTotalProfit();
   const totalCapital = calculateTotalCapital();
-
   const totalSales = getTotalSales();
 
   return (
-    <Background>
-      <h1 className="text-4xl font-extrabold dark:text-white">Dashboard</h1>
-      <div className="flex space-x-4">
-        <Cards title="Total Products" cardContent={items.length}>
-          <MdOutlineShoppingBag />
-        </Cards>
-        <Cards title="Total Profit" cardContent={`N${totalProfit.toFixed(2)}`}>
-          <GiProfit />
-        </Cards>
-        <Cards
-          title="Total Capital"
-          cardContent={`N${totalCapital.toFixed(2)}`}
-        >
-          <TbMoneybag />
-        </Cards>
-        <Cards title="Total Sales" cardContent={totalSales}>
-          <MdOutlineAttachMoney />
-        </Cards>
-      </div>
-      <div className="flex space-x-4">
-        <div className="w-1/2 rounded-lg shadow-md m-2">
-          <div className="rounded-lg overflow-hidden">
-            <ProfitChart />
+    <Background className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
+      <header className="mb-12 text-center">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+          Dashboard
+        </h1>
+        <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
+          Overview of your business performance
+        </p>
+      </header>
+      <main>
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <Cards
+            title="Total Products"
+            cardContent={items.length}
+            icon={<MdOutlineShoppingBag className="w-8 h-8" />}
+          />
+          <Cards
+            title="Total Profit"
+            cardContent={`N${totalProfit.toFixed(2)}`}
+            icon={<GiProfit className="w-8 h-8" />}
+          />
+          <Cards
+            title="Total Capital"
+            cardContent={`N${totalCapital.toFixed(2)}`}
+            icon={<TbMoneybag className="w-8 h-8" />}
+          />
+          <Cards
+            title="Total Sales"
+            cardContent={totalSales}
+            icon={<MdOutlineAttachMoney className="w-8 h-8" />}
+          />
+        </section>
+        <section className="">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-all duration-300">
+            <div className="rounded-lg overflow-hidden">
+              <ProfitChart />
+            </div>
           </div>
-        </div>
-        <div className="w-1/2 rounded-lg shadow-md m-2 p-4 bg-white dark:bg-gray-800">
-          <MostSoldProduct />
-        </div>
-      </div>
+        </section>
+        <section className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-all duration-300">
+            <MostSoldProduct />
+          </div>
+        </section>
+      </main>
     </Background>
   );
 }

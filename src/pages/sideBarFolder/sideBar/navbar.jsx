@@ -11,7 +11,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-indigo-400 text-white flex items-center justify-between px-4 py-2 transition-all duration-100 relative">
+    <div className="bg-teal-200 text-white flex items-center justify-between px-4 py-2 transition-all duration-100 relative">
       <form className="relative w-full max-w-2xl mx-auto">
         <label
           htmlFor="default-search"
@@ -31,7 +31,7 @@ const Navbar = () => {
         />
         <button
           type="submit"
-          className="text-white absolute right-2.5 bottom-2.5 bg-black hover:bg-neutral-900 focus:ring-4 focus:outline-none focus:ring-neutral-600 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white absolute right-2.5 bottom-2.5 bg-teal-300 hover:bg-teal-500 focus:ring-4 focus:outline-none focus:ring-neutral-600 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Search
         </button>

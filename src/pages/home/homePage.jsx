@@ -22,16 +22,16 @@ const Home = () => {
       {clicked ? (
         <Inventory />
       ) : (
-        <Background>
+        <Background className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
           <div className="flex justify-center items-center">
             <div className="w-1/2 mt-72 ml-16">
               <div id="font" className="text-xl font-bold mb-2">
                 <h1 className=" pr-9">
                   <Typewriter />
                 </h1>
-                <h1 className="mt-2 text-3xl font-bold leading-7 bg-blue w-fit rounded text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                {/* <h1 className="mt-2 text-3xl font-bold leading-7 bg-blue w-fit rounded text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
                   The best place to Improve your bussiness
-                </h1>
+                </h1> */}
                 <p className="text-xl ml-40 leading-7 font-semibold text-gray-900 sm:truncate sm:text-xl sm:tracking-tight rounded">
                   Input your stocks
                 </p>
@@ -41,7 +41,7 @@ const Home = () => {
                 <div
                   onClick={handleOnclick}
                   title="Input"
-                  className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gray-900 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                  className="relative bg-teal-500 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                   role="button"
                 >
                   Input now
