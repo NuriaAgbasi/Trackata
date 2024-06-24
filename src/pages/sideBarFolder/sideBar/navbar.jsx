@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { FaBell, FaRegUserCircle, FaSignOutAlt, FaCog } from "react-icons/fa";
 import { IoIosSearch, IoIosArrowDown } from "react-icons/io";
 import { CiUser } from "react-icons/ci";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { email, logout } = useAuth();
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -50,7 +52,7 @@ const Navbar = () => {
                   <FaRegUserCircle className="w-6 h-6 mr-2" />
                   User
                 </div>
-                <div className="font-medium truncate">user@gmail.com</div>
+                <div className="font-medium truncate">{email}</div>
               </div>
               <hr />
               <ul
@@ -79,11 +81,11 @@ const Navbar = () => {
               <hr />
               <div className="py-2">
                 <a
-                  href="/logout"
+                  onClick={logout}
                   className="flex items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 >
                   <FaSignOutAlt className="w-5 h-5 mr-2" />
-                  Sign out
+                  Log out
                 </a>
               </div>
             </div>

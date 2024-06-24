@@ -38,6 +38,10 @@ const sideBarData = [
         title: 'Dashboard',
         path: '/dashboard',
         icon: <FaUserFriends />
+    }, {
+        title: 'Settings',
+        path: '/settings',
+        icon: <FaUserFriends />
     }
 ]
 export default sideBarData;

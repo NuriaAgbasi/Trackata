@@ -4,10 +4,12 @@ import sideBarData from "./sideBarData";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Footer from "../../home/footer";
 import Navbar from "./navbar";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const { user, logout } = useAuth();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -38,8 +40,10 @@ const Sidebar = ({ children }) => {
         >
           <div className="flex items-center justify-between p-4">
             <h1
-              className={`text-xl font-bold text-gray-800 dark:text-white ${
-                isOpen || !isMobile ? "block" : "hidden"
+              className={`text-xl font-bold ${
+                isOpen || !isMobile
+                  ? "text-gray-800 dark:text-white"
+                  : "text-white"
               }`}
             >
               Stocks
@@ -50,6 +54,11 @@ const Sidebar = ({ children }) => {
             >
               <GiHamburgerMenu />
             </div>
+          </div>
+          <div className="p-4">
+            <p className="text-gray-800 dark:text-white">
+              {user ? `Welcome, ${user.teamName}!` : "Welcome, Guest!"}
+            </p>
           </div>
           <nav>
             <ul className="text-gray-800 dark:text-white">

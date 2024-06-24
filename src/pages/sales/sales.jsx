@@ -40,7 +40,7 @@ function Sales() {
           Sales Page
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
-          Make Income here
+          Make Profits here
         </p>
       </header>
       <div>
