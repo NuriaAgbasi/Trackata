@@ -18,17 +18,17 @@ function Dashboard() {
   const totalSales = getTotalSales();
 
   return (
-    <Background className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+    <Background className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4 sm:p-0">
+      <header className=" mt-3 mb-8 text-center">
+        <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-white">
           Dashboard
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
+        <p className="text-sm sm:text-lg text-gray-600 dark:text-gray-400 mt-2">
           Overview of your business performance
         </p>
       </header>
-      <main>
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <main className="flex flex-col items-center sm:items-start">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 w-full">
           <Cards
             title="Total Products"
             cardContent={items.length}
@@ -43,22 +43,24 @@ function Dashboard() {
             title="Total Capital"
             cardContent={`N${totalCapital.toFixed(2)}`}
             icon={<TbMoneybag className="w-8 h-8" />}
+            className="h-32"
           />
           <Cards
             title="Total Sales"
             cardContent={totalSales}
             icon={<MdOutlineAttachMoney className="w-8 h-8" />}
+            className="h-32"
           />
         </section>
-        <section className="">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-all duration-300">
+        <section className="mb-8 w-full">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 transition-all duration-300">
             <div className="rounded-lg overflow-hidden">
               <ProfitChart />
             </div>
           </div>
         </section>
-        <section className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-all duration-300">
+        <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 transition-all duration-300">
             <MostSoldProduct />
           </div>
         </section>

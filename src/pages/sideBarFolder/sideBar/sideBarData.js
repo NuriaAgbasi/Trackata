@@ -5,6 +5,7 @@ import { BiSolidPurchaseTag } from "react-icons/bi";
 import { MdOutlineInventory2 } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import { FaUserFriends } from "react-icons/fa";
+import { CiSettings } from "react-icons/ci";
 
 
 
@@ -41,7 +42,7 @@ const sideBarData = [
     }, {
         title: 'Settings',
         path: '/settings',
-        icon: <FaUserFriends />
+        icon: <CiSettings />
     }
 ]
 export default sideBarData;

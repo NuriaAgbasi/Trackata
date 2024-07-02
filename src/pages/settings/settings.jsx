@@ -1,4 +1,3 @@
-import ReusableLink from "../../components/rusablelink";
 import "./settings.css";
 
 const Settings = () => {

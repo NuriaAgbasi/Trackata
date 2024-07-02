@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const login = (teamName, email, password) => {
+    const login = (teamName, email) => {
         const user = { teamName, email };
         Cookies.set('auth', JSON.stringify(user));
         setIsAuthenticated(true);

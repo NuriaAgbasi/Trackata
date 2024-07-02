@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
+import {
+  FaArrowUp,
+  FaInfoCircle,
+  FaTrash,
+  FaEdit,
+  FaPlus,
+} from "react-icons/fa";
 import EditInventory from "./EditInventory.jsx";
 import DeleteInventory from "./deleteInventory.js";
 import RestockPopup from "./restockInventory";
 import Info from "./info.tsx";
 import Alert from "../../components/Alert.tsx";
-import { FaArrowUp, FaInfoCircle } from "react-icons/fa";
 import { countContext } from "../../components/context.js";
 
 const TABLE_HEAD = [
@@ -65,7 +71,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
       editedIndex < items.length
     ) {
       if (newCost > newPrice) {
-        setAlertMessage("Error,Cost price cannot be higher than sale price.");
+        setAlertMessage("Error, Cost price cannot be higher than sale price.");
         setAlertType("red");
         return;
       }
@@ -137,7 +143,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
         handleSaveEdit: handleSaveEdit,
       }}
     >
-      <div className="h-full w-full overflow-scroll">
+      <div className="h-full w-fit overflow-scroll">
         <Alert message={alertMessage} type={alertType} />
         {popupType === "edit" && <EditInventory />}
         {confirmDelete && (
@@ -163,7 +169,7 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
             onClose={closePopup}
           />
         )}
-        <table className="w-full min-w-max table-auto text-left">
+        <table className="w-fit min-w-fit table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
@@ -217,32 +223,33 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
                         : "N/A"}
                     </p>
                   </td>
-                  <td className="p-4">
+                  <td className="p-4 actions flex space-x-2">
                     <button
                       onClick={() => handleRemoveStock(index)}
-                      className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                      className="bg-red-500 text-white px-4 py-2 rounded flex items-center"
                     >
-                      Remove Stock
+                      <FaTrash className="text-xl sm:mr-2" />
+                      <span className="hidden sm:inline">Remove Stock</span>
                     </button>
                     <button
                       onClick={() => handleEditStock(index)}
-                      className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+                      className="bg-green-500 text-white px-4 py-2 rounded flex items-center"
                     >
-                      Edit Stock Price
+                      <FaEdit className="text-xl sm:mr-2" />
+                      <span className="hidden sm:inline">Edit Stock Price</span>
                     </button>
                     <button
                       onClick={() => openPopup("restock", index)}
-                      className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+                      className="bg-green-500 text-white px-4 py-2 rounded flex items-center"
                     >
-                      Restock
+                      <FaPlus className="text-xl sm:mr-2" />
+                      <span className="hidden sm:inline">Restock</span>
                     </button>
                     <button
                       onClick={() => openPopup("info", index)}
-                      className="text-white px-4 py-2 rounded"
+                      className="text-white px-4 py-2 rounded flex items-center"
                     >
-                      <p className="flex text-black">
-                        <FaInfoCircle />
-                      </p>
+                      <FaInfoCircle className="text-xl" />
                     </button>
                   </td>
                 </tr>
