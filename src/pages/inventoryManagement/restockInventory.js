@@ -31,17 +31,18 @@ function RestockPopup({ product, currentStock, price, onRestock, onClose }) {
                                 Restock
                             </h4>
                             <div className="relative mb-3" data-twe-input-wrapper-init>
-                                <input value={product} readOnly className="input input-bordered w-full bg-blue " />
+                                <input value={product} readOnly className="input input-bordered w-full bg-teal-200 " />
                             </div>
                             <div className="relative mb-3" data-twe-input-wrapper-init>
-                                <input value={price} readOnly className="input input-bordered w-full bg-blue " />
+                                <input value={price} readOnly className="input input-bordered w-full bg-teal-200 " />
                             </div>
                             <div className="relative mb-3" data-twe-input-wrapper-init>
-                                <input value={currentStock} readOnly className="input input-bordered w-full bg-blue " />
+                                <input value={currentStock} readOnly className="input input-bordered w-full bg-teal-200 " />
                             </div>
                             <div className="relative mb-3" data-twe-input-wrapper-init>
-                                <input type="number" placeholder="Restock amount" value={restockAmount} onChange={(e) => setRestockAmount(e.target.value)} required className="input input-bordered w-full bg-blue " />
+                                <input type="number" placeholder="Restock amount" value={restockAmount} onChange={(e) => setRestockAmount(e.target.value)} required className="input input-bordered w-full bg-teal-200 " />
                             </div>
+                            <br />
                             <button
                                 type="button"
                                 onClick={handleRestock}

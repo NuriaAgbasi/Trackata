@@ -91,7 +91,7 @@ function Orders() {
         </p>
       </header>
       <div className="flex flex-col items-center">
-        <div className="relative w-full max-w-sm sm:max-w-xl">
+        <div className="relative w-full max-w-xs sm:max-w-lg md:max-w-xl lg:max-w-2xl">
           <div className="mb-4 flex flex-col sm:flex-row justify-between items-center w-full">
             <input
               type="text"
@@ -124,7 +124,7 @@ function Orders() {
             handleClearLogs={handleClearLogs}
             clearError={clearError}
           />
-          <div className="overflow-y-auto">
+          <div className="overflow-y-auto max-h-96">
             {Object.keys(groupedSalesLog)
               .sort(
                 (a, b) =>
@@ -137,7 +137,7 @@ function Orders() {
                     {date}
                   </h2>
                   <div className="overflow-x-auto">
-                    <table className="min-w-full text-left text-sm font-light text-gray-900 dark:text-white">
+                    <table className="min-w-full text-left text-xs font-light text-gray-900 dark:text-white">
                       <thead className="border-b border-gray-200 dark:border-gray-700 font-medium">
                         <tr>
                           <th scope="col" className="px-4 py-2">

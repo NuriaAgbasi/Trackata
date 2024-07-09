@@ -12,6 +12,8 @@ import RestockPopup from "./restockInventory";
 import Info from "./info.tsx";
 import Alert from "../../components/Alert.tsx";
 import { countContext } from "../../components/context.js";
+import DeletedInventoryPopup from "./DeleteInventoryPopup";
+import useLocalStorage from "../../components/localStorage.ts";
 
 const TABLE_HEAD = [
   "Name",
@@ -33,6 +35,11 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
   const [changeHistory, setChangeHistory] = useState({});
+  const [deletedInventory, setDeletedInventory] = useLocalStorage(
+    "deletedInventory",
+    []
+  );
+  const [showDeletedPopup, setShowDeletedPopup] = useState(false);
 
   const handleRemoveStock = (index) => {
     setConfirmDelete(true);
@@ -40,6 +47,8 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
   };
 
   const confirmRemoveStock = () => {
+    const itemToDelete = items[editedIndex];
+    setDeletedInventory([...deletedInventory, itemToDelete]);
     onRemoveStock(editedIndex);
     setConfirmDelete(false);
     setAlertMessage("Item has been deleted!");
@@ -124,9 +133,10 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
     setPopupType(null);
   };
 
-  const openPopup = (type, data) => {
+  const openPopup = (type, index) => {
+    setEditedIndex(index);
     setPopupType(type);
-    setPopupData(data);
+    setPopupData(items[index]);
   };
 
   const closePopup = () => {
@@ -152,21 +162,34 @@ function InventoryTable({ items, setItems, onRemoveStock }) {
             onCancel={cancelRemoveStock}
           />
         )}
-
-        {popupType === "restock" && (
-          <RestockPopup
-            product={items[editedIndex].name}
-            currentStock={items[editedIndex].stock}
-            price={items[editedIndex].price}
-            onRestock={handleRestock}
-            onClose={closePopup}
-          />
-        )}
-        {popupType === "info" && (
+        {popupType === "restock" &&
+          editedIndex !== null &&
+          items[editedIndex] && (
+            <RestockPopup
+              product={items[editedIndex].name}
+              currentStock={items[editedIndex].stock}
+              price={items[editedIndex].price}
+              onRestock={handleRestock}
+              onClose={closePopup}
+            />
+          )}
+        {popupType === "info" && editedIndex !== null && items[editedIndex] && (
           <Info
             title="Change History"
             content={changeHistory[items[editedIndex]?.name] || []}
             onClose={closePopup}
+          />
+        )}
+        <button
+          onClick={() => setShowDeletedPopup(true)}
+          className="bg-teal-300 text-white px-4 py-2 rounded mb-4"
+        >
+          Show Deleted Inventory
+        </button>
+        {showDeletedPopup && (
+          <DeletedInventoryPopup
+            deletedInventory={deletedInventory}
+            onClose={() => setShowDeletedPopup(false)}
           />
         )}
         <table className="w-fit min-w-fit table-auto text-left">

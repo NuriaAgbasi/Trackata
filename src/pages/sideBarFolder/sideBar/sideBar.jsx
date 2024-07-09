@@ -46,8 +46,11 @@ function Sidebar({ isOpen, toggleSidebar }) {
               <li key={index}>
                 <NavLink
                   to={item.path}
-                  className="flex items-center py-2 px-4 rounded-md transition-colors duration-300"
-                  activeClassName="bg-teal-200"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center py-2 px-4 rounded-md transition-colors duration-300 bg-teal-200"
+                      : "flex items-center py-2 px-4 rounded-md transition-colors duration-300"
+                  }
                 >
                   <div className="mr-3">{item.icon}</div>
                   <span className="text-sm">{item.title}</span>
