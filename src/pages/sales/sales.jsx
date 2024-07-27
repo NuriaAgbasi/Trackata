@@ -1,37 +1,92 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import supabase from "../../config/supabaseClient";
 import Background from "../../components/background.tsx";
-import Salesstate from "./salesstate.jsx";
 
 function Sales() {
-  const {
-    selectedProduct,
-    setSelectedProduct,
-    quantitySold,
-    setQuantitySold,
-    error,
-    customerName,
-    setCustomerName,
-    successMessage,
-    setSuccessMessage,
-    handleSellStock,
-    items,
-    price,
-    setPrice,
-  } = Salesstate();
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [quantitySold, setQuantitySold] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [error, setError] = useState("");
+  const [items, setItems] = useState([]);
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   useEffect(() => {
     const product = items.find((item) => item.name === selectedProduct);
     if (product) {
       setPrice(product.price || 0);
     }
-  }, [selectedProduct, items, setPrice]);
+  }, [selectedProduct, items]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setSuccessMessage("");
     }, 10000);
     return () => clearTimeout(timer);
-  }, [successMessage, setSuccessMessage]);
+  }, [successMessage]);
+
+  const fetchItems = async () => {
+    const { data, error } = await supabase.from("inventory").select("*");
+    if (error) {
+      console.error("Error fetching items:", error);
+    } else {
+      setItems(data);
+    }
+  };
+
+  const handleSellStock = async () => {
+    try {
+      const product = items.find((item) => item.name === selectedProduct);
+      if (!product) {
+        setError("Selected product does not exist in inventory.");
+        return;
+      }
+
+      const newQuantity = product.stock - quantitySold;
+      if (newQuantity < 0) {
+        setError("Not enough stock available.");
+        return;
+      }
+
+      const { error: updateError } = await supabase
+        .from("inventory")
+        .update({ stock: newQuantity })
+        .eq("id", product.id);
+
+      if (updateError) {
+        console.error("Error updating inventory:", updateError);
+        setError("Error updating inventory.");
+        return;
+      }
+
+      const { error: insertError } = await supabase.from("sales").insert([
+        {
+          product_id: product.id,
+          quantity: quantitySold,
+          price: price,
+          customer_name: customerName,
+        },
+      ]);
+
+      if (insertError) {
+        console.error("Error inserting sale:", insertError);
+        setError("Error inserting sale.");
+        return;
+      }
+
+      setSuccessMessage("Sale recorded successfully.");
+      setSelectedProduct("");
+      setQuantitySold("");
+      setCustomerName("");
+    } catch (error) {
+      console.error("Error during sale transaction:", error);
+      setError("Error during sale transaction.");
+    }
+  };
 
   return (
     <Background className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
@@ -53,7 +108,7 @@ function Sales() {
             >
               <option value="default">Pick a Product</option>
               {items.map((item) => (
-                <option key={item.name} value={item.name}>
+                <option key={item.id} value={item.name}>
                   {item.name}
                 </option>
               ))}
@@ -82,9 +137,7 @@ function Sales() {
             <button
               type="button"
               onClick={handleSellStock}
-              data-twe-ripple-init
-              data-twe-ripple-color="light"
-              className="my-4 ml-28 inline-block rounded bg-teal-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+              className="my-4 ml-28 inline-block rounded bg-teal-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2"
             >
               Sell Stock
             </button>

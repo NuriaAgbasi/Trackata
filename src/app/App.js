@@ -11,6 +11,7 @@ import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import ProtectedRoute from '../pages/ProtectedRoute';
 import SignUp from '../pages/SignUp';
 import SettingsPage from '../pages/SettingsPage';
+import EditInventory from '../pages/inventoryManagement/EditInventory'
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -58,6 +59,8 @@ const App = () => {
               <Route path="/inventory" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/inventoryManagement/edit/:id" element={<EditInventory />} />
+
             </Routes>
           </main>
         </div>

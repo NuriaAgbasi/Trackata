@@ -1,5 +1,6 @@
-import React from "react";
-import Inventorystate from "./inventorystate.jsx";
+import React, { useState, useEffect } from "react";
+import supabase from "../../config/supabaseClient";
+import Alert from "../../components/Alert.tsx";
 
 interface InventoryFormProps {
   onAddItem: (item: {
@@ -13,69 +14,52 @@ interface InventoryFormProps {
 }
 
 const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
-  const {
-    name,
-    setName,
-    stock,
-    setStock,
-    price,
-    setPrice,
-    costPrice,
-    setCostPrice,
-    error,
-    setError,
-    resetFields,
-  } = Inventorystate();
+  const [name, setName] = useState("");
+  const [stock, setStock] = useState("");
+  const [sales_price, setSales_price] = useState("");
+  const [cost_price, setCost_price] = useState("");
+  const [formError, setFormError] = useState<string | null>(null);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const [alertType, setAlertType] = useState<
+    "success" | "error" | "info" | "warning"
+  >("info");
 
-  const calculateProfit = (): number | undefined => {
-    const cp = parseFloat(costPrice);
-    const sp = parseFloat(price);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    if (isNaN(cp) || isNaN(sp)) {
-      setError("Invalid cost price or sale price.");
-      return undefined;
-    }
-
-    if (cp > sp) {
-      setError("Cost price is higher than sale price. No profit can be made.");
-      return undefined;
-    }
-
-    const profit = sp - cp;
-    setError("");
-    return profit;
-  };
-
-  const handleAddItem = () => {
-    if (!name || !stock || !price || !costPrice) {
-      setError("Please input all fields");
+    if (!name || !stock || !sales_price || !cost_price) {
+      setFormError("Please fill in all the fields correctly.");
+      setAlertMessage("Please fill in all the fields correctly.");
+      setAlertType("error");
       return;
     }
-    if (
-      isNaN(Number(stock)) ||
-      isNaN(Number(price)) ||
-      isNaN(Number(costPrice))
-    ) {
-      setError("Please enter valid numbers for stock, price, and cost price");
+    if (parseFloat(cost_price) >= parseFloat(sales_price)) {
+      setFormError("Cost Price cannot exceed or be equals to Sales Price.");
+      setAlertMessage("Cost Price cannot exceed or be equal to Sales Price.");
+      setAlertType("error");
       return;
     }
+    const { data, error } = await supabase.from("inventory").insert([
+      {
+        name,
+        stock: parseFloat(stock),
+        sales_price: parseFloat(sales_price),
+        cost_price: parseFloat(cost_price),
+      },
+    ]);
 
-    const profit = calculateProfit();
-    if (profit === undefined) {
-      return;
+    if (error) {
+      console.log(error);
+      setFormError("Please fill in all the fields correctly.");
+      setAlertMessage("Error occurred while adding the item.");
+      setAlertType("error");
+    } else {
+      setFormError(null);
+      setAlertMessage("Item added successfully!");
+      setAlertType("success");
+      console.log("success");
+      handleClosePopup();
     }
-
-    const newItem = {
-      name,
-      stock: parseInt(stock, 10),
-      price: parseFloat(price),
-      costPrice: parseFloat(costPrice),
-      profit,
-    };
-
-    onAddItem(newItem);
-    resetFields();
-    handleClosePopup();
   };
 
   return (
@@ -117,8 +101,8 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
               <div className="relative mb-3">
                 <input
                   type="number"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  value={sales_price}
+                  onChange={(e) => setSales_price(e.target.value)}
                   placeholder="Price"
                   className="bg-teal-300 text-white input input-bordered w-full"
                 />
@@ -127,8 +111,8 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
               <div className="relative mb-3">
                 <input
                   type="number"
-                  value={costPrice}
-                  onChange={(e) => setCostPrice(e.target.value)}
+                  value={cost_price}
+                  onChange={(e) => setCost_price(e.target.value)}
                   placeholder="Cost Price"
                   className="bg-teal-300 text-white input input-bordered w-full"
                 />
@@ -136,16 +120,17 @@ const InventoryForm = ({ onAddItem, handleClosePopup }: InventoryFormProps) => {
               <br />
               <button
                 type="button"
-                onClick={handleAddItem}
+                onClick={handleSubmit}
                 className="ml-56 bg-green-500 mr-2 inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white"
               >
                 Add Item
               </button>
-              {error && <p className="text-red-500">{error}</p>}
+              {formError && <p className="error">{formError}</p>}
             </div>
           </div>
         </div>
       </div>
+      {alertMessage && <Alert message={alertMessage} type={alertType} />}
     </div>
   );
 };

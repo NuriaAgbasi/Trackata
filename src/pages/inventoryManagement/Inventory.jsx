@@ -18,8 +18,8 @@ function Inventory() {
   } = Inventorystate();
   return (
     <div>
-      <Background className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
-        <header className="mb-12 text-center">
+      <Background className="min-h-screen min-w-fit bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 ">
+        <header className="mb-12 mt-6 text-center">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
             Inventory
           </h1>
@@ -55,12 +55,14 @@ function Inventory() {
             </div>
           </div>
         )}
-        <InventoryTable
-          items={items}
-          setItems={setItems}
-          onRemoveStock={handleRemoveStock}
-          onEditStock={handleEditStock}
-        />
+        <div className="sm:w-full w-64 overflow-x-auto">
+          <InventoryTable
+            items={items}
+            setItems={setItems}
+            onRemoveStock={handleRemoveStock}
+            onEditStock={handleEditStock}
+          />
+        </div>
       </Background>
     </div>
   );

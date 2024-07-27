@@ -1,33 +1,47 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Salesstate from "../sales/salesstate";
+import supabase from "../../config/supabaseClient";
 import Background from "../../components/background.tsx";
 import ClearLogsModal from "./clearlogsmodal.tsx";
 
 function Orders() {
-  const { salesLog, items, setSalesLog } = Salesstate();
+  const [salesLog, setSalesLog] = useState([]);
+  const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredSalesLog, setFilteredSalesLog] = useState(salesLog);
+  const [filteredSalesLog, setFilteredSalesLog] = useState([]);
   const [searchError, setSearchError] = useState("");
   const [clearError, setClearError] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const defaultPrices = items.reduce((acc, item) => {
-    acc[item.name] = item.price;
-    return acc;
-  }, {});
+  useEffect(() => {
+    fetchSales();
+    fetchItems();
+  }, []);
 
-  const groupedSalesLog = filteredSalesLog.reduce((acc, sale) => {
-    const date = sale.date;
-    acc[date] = acc[date] || [];
-    acc[date].push(sale);
-    return acc;
-  }, {});
+  const fetchSales = async () => {
+    const { data, error } = await supabase.from("sales").select("*");
+    if (error) {
+      console.error("Error fetching sales:", error);
+    } else {
+      setSalesLog(data);
+      setFilteredSalesLog(data);
+    }
+  };
+
+  const fetchItems = async () => {
+    const { data, error } = await supabase.from("inventory").select("*");
+    if (error) {
+      console.error("Error fetching items:", error);
+    } else {
+      setItems(data);
+    }
+  };
 
   const filterSalesLog = useCallback(() => {
     const filteredSales = salesLog.filter(
       (sale) =>
-        sale.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        sale.date === searchQuery
+        (sale.product &&
+          sale.product.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (sale.date && sale.date.includes(searchQuery))
     );
 
     if (filteredSales.length === 0) {
@@ -47,7 +61,7 @@ function Orders() {
     setSearchQuery(e.target.value);
   };
 
-  const handleClearLogs = (clearByDate, clearPassword) => {
+  const handleClearLogs = async (clearByDate, clearPassword) => {
     const correctPassword = "yourpassword";
     if (clearPassword !== correctPassword) {
       setClearError("Incorrect password.");
@@ -61,12 +75,18 @@ function Orders() {
       return;
     }
 
-    const newSalesLog = salesLog.filter((sale) => new Date(sale.date) !== date);
+    const { data, error } = await supabase
+      .from("sales")
+      .delete()
+      .eq("date", clearByDate);
 
-    if (newSalesLog.length === salesLog.length) {
-      setClearError("No logs found for the specified date.");
+    if (error) {
+      console.error("Error clearing logs:", error);
+      setClearError("Error clearing logs.");
     } else {
-      setSalesLog(newSalesLog);
+      setSalesLog((prevSalesLog) =>
+        prevSalesLog.filter((sale) => sale.date !== clearByDate)
+      );
       setClearError("");
       setShowModal(false);
     }
@@ -125,11 +145,24 @@ function Orders() {
             clearError={clearError}
           />
           <div className="overflow-y-auto max-h-96">
-            {Object.keys(groupedSalesLog)
+            {Object.keys(
+              filteredSalesLog.reduce((acc, sale) => {
+                const date = sale.created_at.split("T")[0];
+                acc[date] = acc[date] || [];
+                acc[date].push(sale);
+                return acc;
+              }, {})
+            )
               .sort(
                 (a, b) =>
-                  getFullDateTime(b, groupedSalesLog[b][0].time) -
-                  getFullDateTime(a, groupedSalesLog[a][0].time)
+                  getFullDateTime(
+                    b,
+                    filteredSalesLog[0].created_at.split("T")[1]
+                  ) -
+                  getFullDateTime(
+                    a,
+                    filteredSalesLog[0].created_at.split("T")[1]
+                  )
               )
               .map((date, dateIndex) => (
                 <React.Fragment key={dateIndex}>
@@ -161,25 +194,25 @@ function Orders() {
                         </tr>
                       </thead>
                       <tbody>
-                        {groupedSalesLog[date]
-                          .sort(
-                            (a, b) =>
-                              getFullDateTime(b.date, b.time) -
-                              getFullDateTime(a.date, a.time)
+                        {filteredSalesLog
+                          .filter(
+                            (sale) => sale.created_at.split("T")[0] === date
                           )
                           .map((sale, index) => (
                             <tr
                               key={index}
                               className="border-b border-gray-200 dark:border-gray-700"
                             >
-                              <td className="px-4 py-2">{index}</td>
-                              <td className="px-4 py-2">{sale.time}</td>
-                              <td className="px-4 py-2">{sale.customer}</td>
-                              <td className="px-4 py-2">{sale.quantity}</td>
-                              <td className="px-4 py-2">{sale.product}</td>
+                              <td className="px-4 py-2">{sale.id}</td>
                               <td className="px-4 py-2">
-                                {sale.price || defaultPrices[sale.product]}
+                                {sale.created_at.split("T")[1]}
                               </td>
+                              <td className="px-4 py-2">
+                                {sale.customer_name}
+                              </td>
+                              <td className="px-4 py-2">{sale.quantity}</td>
+                              <td className="px-4 py-2">{sale.product_id}</td>
+                              <td className="px-4 py-2">{sale.price}</td>
                             </tr>
                           ))}
                       </tbody>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const DeleteInventory = ({ handleActionConfirmation, onCancel, inventoryItem }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="fixed inset-0 flex z-50 items-center justify-center">
       <div className="w-full px-4">
         <div className="grid h-screen place-items-center">
           <div className="max-w-xl w-full">

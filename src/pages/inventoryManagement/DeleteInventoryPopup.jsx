@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import supabase from "../../config/supabaseClient";
 
-const DeletedInventoryPopup = ({ deletedInventory, onClose }) => {
+const DeletedInventoryPopup = ({ onClose }) => {
+  const [deletedInventory, setDeletedInventory] = useState([]);
+
+  useEffect(() => {
+    fetchDeletedItems();
+  }, []);
+
+  const fetchDeletedItems = async () => {
+    const { data, error } = await supabase
+      .from("deleted_inventory")
+      .select("*");
+    if (error) {
+      console.error("Error fetching deleted items:", error);
+    } else {
+      setDeletedInventory(data);
+    }
+  };
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
       <div className="w-full px-4">
         <div className="grid h-screen place-items-center">
           <div className="max-w-xl w-full">
@@ -14,7 +32,7 @@ const DeletedInventoryPopup = ({ deletedInventory, onClose }) => {
               >
                 &times;
               </button>
-              <h5 className="mb-6 mt-10 ml-40 text-xl font-medium text-primary">
+              <h5 className="mb-6 mt-10 text-xl font-medium text-primary">
                 Deleted Inventory
               </h5>
               <ol>
