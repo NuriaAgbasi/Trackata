@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     LineChart,
     Line,
@@ -8,11 +8,60 @@ import {
     Tooltip,
     Legend,
 } from "recharts";
-import Salesstate from "../../sales/salesstate";
+import supabase from '../../../config/supabaseClient';
 
 const ProfitChart = () => {
-    const { calculateDailyProfits } = Salesstate();
-    const chartData = calculateDailyProfits();
+    const [chartData, setChartData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+
+                const { data: sales, error } = await supabase
+                    .from('sales')
+                    .select('*');
+
+                if (error) throw error;
+
+                console.log(sales);
+
+               
+                const dailyProfits = calculateDailyProfits(sales);
+                setChartData(dailyProfits);
+            } catch (error) {
+                console.error("Error fetching sales data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const calculateDailyProfits = (sales = []) => {
+        const profitMap = {};
+
+        sales.forEach((sale) => {
+            const dateStr = sale.created_at || '';
+            const date = new Date(dateStr);
+
+            if (isNaN(date.getTime())) {
+                console.error("Invalid date format:", dateStr);
+                return;
+            }
+
+            const formattedDate = date.toLocaleDateString('en-GB'); 
+            const profit = sale.price || 0; 
+
+            if (!profitMap[formattedDate]) {
+                profitMap[formattedDate] = 0;
+            }
+            profitMap[formattedDate] += profit;
+        });
+
+        return Object.keys(profitMap).map((date) => ({
+            date,
+            profit: profitMap[date],
+        }));
+    };
 
     const valueFormatter = (number) => {
         return 'N' + new Intl.NumberFormat('us').format(number).toString();
@@ -36,7 +85,6 @@ const ProfitChart = () => {
                     height={400}
                     data={chartData}
                     margin={{ top: 20, right: 30, left: 20, bottom: 30 }}
-
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis

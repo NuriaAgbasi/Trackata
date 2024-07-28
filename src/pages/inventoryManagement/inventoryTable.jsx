@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import supabase from "../../config/supabaseClient";
+import EditInventory from "./EditInventory.jsx";
+import DeleteInventory from "./deleteInventory.js";
+import RestockPopup from "./restockInventory";
+import Info from "./info.tsx";
+import Alert from "../../components/Alert.tsx";
 import {
   FaArrowUp,
   FaInfoCircle,
@@ -8,13 +13,6 @@ import {
   FaEdit,
   FaPlus,
 } from "react-icons/fa";
-import EditInventory from "./EditInventory.jsx";
-import DeleteInventory from "./deleteInventory.js";
-import RestockPopup from "./restockInventory";
-import Info from "./info.tsx";
-import Alert from "../../components/Alert.tsx";
-import { countContext } from "../../components/context.js";
-import { useNavigate } from "react-router-dom";
 import DeletedInventoryPopup from "./DeleteInventoryPopup";
 
 const TABLE_HEAD = [
@@ -42,17 +40,33 @@ function InventoryTable() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchItems();
-  }, []);
+    const fetchItems = async () => {
+      const { data, error } = await supabase.from("inventory").select("*");
+      if (error) {
+        console.error("Error fetching items:", error);
+      } else {
+        setItems(data);
+      }
+    };
 
-  const fetchItems = async () => {
-    const { data, error } = await supabase.from("inventory").select("*");
-    if (error) {
-      console.error("Error fetching items:", error);
-    } else {
-      setItems(data);
-    }
-  };
+    fetchItems();
+
+    const inventoryChannel = supabase
+      .channel("inventory_channel")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "inventory" },
+        (payload) => {
+          console.log("Change received!", payload);
+          fetchItems();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(inventoryChannel);
+    };
+  }, []);
 
   const handleRemoveStock = (index) => {
     setConfirmDelete(true);
@@ -76,7 +90,6 @@ function InventoryTable() {
 
     if (insertError) {
       console.error("Error inserting deleted item:", insertError.message);
-      console.error("Insert error details:", insertError);
     } else {
       const { data: deleteData, error: deleteError } = await supabase
         .from("inventory")
@@ -85,7 +98,6 @@ function InventoryTable() {
 
       if (deleteError) {
         console.error("Error deleting item:", deleteError.message);
-        console.error("Delete error details:", deleteError);
       } else {
         const updatedItems = items.filter((_, index) => index !== editedIndex);
         setItems(updatedItems);
@@ -190,7 +202,8 @@ function InventoryTable() {
 
     const { error } = await supabase
       .from("inventory")
-      .update({ stock: updatedItems[editedIndex].stock });
+      .update({ stock: updatedItems[editedIndex].stock })
+      .eq("id", updatedItems[editedIndex].id);
 
     if (error) {
       console.error("Error updating stock:", error);
@@ -209,18 +222,9 @@ function InventoryTable() {
   };
 
   return (
-    // <countContext.Provider
-    //   value={{
-    //     editedStock: popupData?.editedStock || "",
-    //     editedPrice: popupData?.editedPrice || "",
-    //     editedCost: popupData?.editedCost || "",
-    //     handleSaveEdit: handleSaveEdit,
-    //   }}
-    // >
     <div className="h-full w-fit overflow-scroll">
       {popupType === "edit" && <EditInventory onClose={closePopup} />}
       <Alert message={alertMessage} type={alertType} />
-      {/* {popupType === "edit" && <EditInventory onClose={closePopup} />} */}
       {confirmDelete && (
         <DeleteInventory
           handleActionConfirmation={confirmRemoveStock}
@@ -259,8 +263,8 @@ function InventoryTable() {
       )}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr className="border-b border-gray-200 dark:border-gray-700">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
+            <tr>
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
@@ -321,10 +325,7 @@ function InventoryTable() {
                       <span className="material-icons">delete</span>
                     </button>
                     <button onClick={() => openPopup("edit", index)}>
-                      <i classme="material-icons">edit</i>
-                      {/* <Link to={`/inventoryManagement/edit/${item.id}`}>
-  <i className="material-icons">edit</i>
-</Link> */}
+                      <i className="material-icons">edit</i>
                     </button>
 
                     <button
@@ -346,7 +347,6 @@ function InventoryTable() {
         </table>
       </div>
     </div>
-    // </countContext.Provider>
   );
 }
 

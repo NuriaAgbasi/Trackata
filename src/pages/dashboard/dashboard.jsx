@@ -1,21 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Background from "../../components/background.tsx";
 import Cards from "./cards";
-import Inventorystate from "../inventoryManagement/inventorystate.jsx";
 import { MdOutlineShoppingBag, MdOutlineAttachMoney } from "react-icons/md";
 import { GiProfit } from "react-icons/gi";
 import { TbMoneybag } from "react-icons/tb";
 import ProfitChart from "./linechart/linechart.js";
-import Salesstate from "../sales/salesstate.jsx";
 import MostSoldProduct from "./mostsoldproduct.jsx";
+import supabase from "../../config/supabaseClient.js";
+import StockAlert from "./stockAlert";
 
 function Dashboard() {
-  const { items, calculateTotalProfit, calculateTotalCapital } =
-    Inventorystate();
-  const { getTotalSales } = Salesstate();
-  const totalProfit = calculateTotalProfit();
-  const totalCapital = calculateTotalCapital();
-  const totalSales = getTotalSales();
+  const [items, setItems] = useState([]);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [totalProfit, setTotalProfit] = useState(0);
+  const [totalCapital, setTotalCapital] = useState(0);
+  const [totalSales, setTotalSales] = useState(0);
+
+  useEffect(() => {
+    const fetchInventoryData = async () => {
+      const { data, error } = await supabase.from("inventory").select("*");
+      if (error) {
+        console.error("Error fetching inventory data:", error);
+        return;
+      }
+
+      setItems(data);
+      setTotalProducts(data.length);
+
+      const profit = data.reduce(
+        (acc, item) => acc + (item.sales_price || 0),
+        0
+      );
+      const capital = data.reduce(
+        (acc, item) => acc + (item.cost_price || 0),
+        0
+      );
+
+      setTotalProfit(profit);
+      setTotalCapital(capital);
+    };
+
+    const fetchSalesData = async () => {
+      const { data, error } = await supabase.from("sales").select("*");
+      if (error) {
+        console.error("Error fetching sales data:", error);
+        return;
+      }
+
+      setTotalSales(data.length);
+    };
+
+    fetchInventoryData();
+    fetchSalesData();
+  }, []);
 
   return (
     <Background className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4 sm:p-0">
@@ -31,7 +68,7 @@ function Dashboard() {
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 w-full">
           <Cards
             title="Total Products"
-            cardContent={items.length}
+            cardContent={totalProducts}
             icon={<MdOutlineShoppingBag className="w-8 h-8" />}
           />
           <Cards
@@ -52,8 +89,8 @@ function Dashboard() {
             className="h-32"
           />
         </section>
-        <section className="mb-8 w-full">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 transition-all duration-300">
+        <section className="mb-8 w-72 sm:w-full overflow-x-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg  transition-all duration-300">
             <div className="rounded-lg overflow-hidden">
               <ProfitChart />
             </div>
@@ -62,6 +99,9 @@ function Dashboard() {
         <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 transition-all duration-300">
             <MostSoldProduct />
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 transition-all duration-300">
+            <StockAlert />
           </div>
         </section>
       </main>
