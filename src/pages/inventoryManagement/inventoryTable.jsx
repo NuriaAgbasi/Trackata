@@ -324,6 +324,7 @@ function InventoryTable() {
                     >
                       <span className="material-icons">delete</span>
                     </button>
+                    {/* <Link to={/inventoryManagement/edit/${item.id}}>*/}
                     <button onClick={() => openPopup("edit", index)}>
                       <i className="material-icons">edit</i>
                     </button>
