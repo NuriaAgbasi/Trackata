@@ -19,10 +19,10 @@ const Home = () => {
           <div className="flex justify-center items-center">
             <div className="w-full sm:w-1/2 mt-12">
               <h1 className="text-3xl font-bold mb-4 text-gray-900 sm:text-4xl sm:leading-10">
-                Welcome to Stocks!
+                Welcome to Trackata!
               </h1>
               <p className="text-xl mb-8 text-gray-900">
-                Stocks is a place to get insights on your inventory and make
+                Trackata is a place to get insights on your inventory and make
                 sales.
                 <br />
                 <span className="block mt-2">

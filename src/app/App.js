@@ -29,7 +29,7 @@ const App = () => {
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <div className="flex flex-col flex-1">
           <nav className="bg-teal-200 p-4 flex justify-between items-center">
-            <div className="text-white">Stocks</div>
+            <div className="text-white">Trackata</div>
             <button
               onClick={toggleSidebar}
               className="text-white md:hidden"

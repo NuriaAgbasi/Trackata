@@ -10,7 +10,7 @@ export default function Footer() {
             className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
           >
             <span className="text-2xl font-semibold text-gray-800 dark:text-white">
-              Stocks
+              Trackata
             </span>
           </a>
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-600 sm:mb-0 dark:text-gray-400">
@@ -40,7 +40,7 @@ export default function Footer() {
         <span className="block text-sm text-gray-600 sm:text-center dark:text-gray-400">
           © 2024{" "}
           <a href="/" className="hover:text-blue-500">
-            Stocks™
+            Trackata™
           </a>
           . All Rights Reserved.
         </span>

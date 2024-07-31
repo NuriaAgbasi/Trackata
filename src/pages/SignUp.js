@@ -41,10 +41,10 @@ const SignUp = () => {
                 <div className="mr-5 lg:w-1/2 lg:flex lg:justify-center lg:items-center lg:text-left">
                     <div>
                         <h1 className="text-4xl font-extrabold text-gray-900">
-                            Welcome to Stocks
+                            Welcome to Trackata
                         </h1>
                         <p className="mt-4 text-lg text-gray-600">
-                            Join Stocks to see your Investments grow. Sign up now to get started!
+                            Join Trackata to see your Investments grow. Sign up now to get started!
                         </p>
                     </div>
                 </div>
