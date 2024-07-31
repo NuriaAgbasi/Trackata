@@ -4,34 +4,42 @@ import { useCookies } from 'react-cookie';
 import Background from '../components/background.tsx';
 import supabase from '../config/supabaseClient.js';
 
-const SignUp = () => {
-    const [teamName, setTeamName] = useState('');
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(['session']);
 
-    const handleSignUp = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (teamName.trim() === '' || email.trim() === '' || password.trim() === '') {
+        if (email.trim() === '' || password.trim() === '') {
             setErrorMessage('All fields are required');
             return;
         }
 
+        try {
+            
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
 
-        const { data, error } = await supabase.auth.signUp({
-            email,
-            password,
-        });
+            if (error) {
+                console.error('Error logging in:', error.message);
+                setErrorMessage('Invalid login credentials');
+            } else if (data.session) {
+                
+                console.log('Saving session to cookies:', data.session);
+                setCookie('session', JSON.stringify(data.session), { path: '/' });
 
-        if (error) {
-            console.error('Error signing up:', error.message);
-            setErrorMessage(error.message);
-        } else {
-
-            setCookie('session', data.session, { path: '/' });
-            navigate('/home');
+                
+                console.log('Navigating to home');
+                navigate('/home');
+            }
+        } catch (err) {
+            console.error('Unexpected error:', err);
+            setErrorMessage('An unexpected error occurred. Please try again later.');
         }
     };
 
@@ -41,10 +49,10 @@ const SignUp = () => {
                 <div className="mr-5 lg:w-1/2 lg:flex lg:justify-center lg:items-center lg:text-left">
                     <div>
                         <h1 className="text-4xl font-extrabold text-gray-900">
-                            Welcome to Stocks
+                            Welcome Back
                         </h1>
                         <p className="mt-4 text-lg text-gray-600">
-                            Join Stocks to see your Investments grow. Sign up now to get started!
+                            Log in to your account to continue where you left off.
                         </p>
                     </div>
                 </div>
@@ -52,24 +60,11 @@ const SignUp = () => {
                     <div className="max-w-md w-full space-y-8">
                         <div>
                             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                                Sign Up
+                                Log In
                             </h2>
                         </div>
                         <form className="mt-8 space-y-6">
                             <div className="rounded-md shadow-sm -space-y-px">
-                                <div>
-                                    <input
-                                        id="team-name"
-                                        name="team-name"
-                                        type="text"
-                                        autoComplete="team-name"
-                                        required
-                                        className="bg-white appearance-none mb-2 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                        placeholder="Username"
-                                        value={teamName}
-                                        onChange={(e) => setTeamName(e.target.value)}
-                                    />
-                                </div>
                                 <div>
                                     <input
                                         id="email-address"
@@ -104,11 +99,23 @@ const SignUp = () => {
                             <div>
                                 <button
                                     type="button"
-                                    onClick={handleSignUp}
+                                    onClick={handleLogin}
                                     className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
-                                    Sign Up
+                                    Log In
                                 </button>
+                            </div>
+
+                            <div className="mt-4 text-center">
+                                <p className="text-gray-600">
+                                    Don't have an account?{' '}
+                                    <a
+                                        href="/signup"
+                                        className="text-indigo-600 hover:text-indigo-700"
+                                    >
+                                        Sign Up
+                                    </a>
+                                </p>
                             </div>
                         </form>
                     </div>
@@ -118,4 +125,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default Login;
