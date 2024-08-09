@@ -1,0 +1,1 @@
+Trackata is an app I created for my mom, who owns a business where she sells various items and manages a team of employees. She wanted a way to keep track of sales and ensure that her employees were not engaging in any fraudulent activities.
