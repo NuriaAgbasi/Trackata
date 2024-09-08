@@ -60,7 +60,7 @@ const App = () => {
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/inventoryManagement/edit/:id" element={<EditInventory />} />
-
+              <Route path="/rolebased" element={<ProtectedRoute allowedRoles={['admin']}><h1>Admin only</h1></ProtectedRoute>}/>
             </Routes>
           </main>
         </div>

@@ -32,6 +32,7 @@ const Home = () => {
                   </Link>{" "}
                   to add new inventory.
                 </span>
+                <Link to = "/rolebased">rolebased </Link>
               </p>
               <div className="relative">
                 {/* <div className="absolute bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-lg opacity-70 inset-0 animate-pulse transition-opacity duration-1000 group-hover:opacity-100 group-hover:duration-200"></div> */}
